@@ -23,7 +23,13 @@
     state: directory
     mode: 0755
 
+- name: Unmount the CephFS filesystem
+  command: "fusermount -u /root/mnt"
+  when: ceph_mount_do_unmount
+  ignore_errors: "{{ ceph_mount_do_mount }}"
+  tags: unmount
+  
 - name: Mount the CephFS filesystem
   command: "ceph-fuse /root/mnt --id={{ ceph_mount_ceph_access_user }} --conf=/root/ceph.conf --keyring=/root/{{ ceph_mount_ceph_access_user }}.keyring --client-mountpoint={{ ceph_mount_ceph_mountpoint}}"
-
-
+  when: ceph_mount_do_mount
+  tags: mount

@@ -3,7 +3,12 @@
 ceph_mount_ceph_mon_host: localhost
 ceph_mount_ceph_mon_hostlist: "{{ ceph_mount_ceph_mon_host }}:6789"
 
-ceph_mount_ceph_access_user: user
-ceph_mount_ceph_access_key: FakeKey==
+ceph_mount_ceph_access_user: fakeuser
+ceph_mount_ceph_access_key: ABCDuPFZ7wNLExAAuWmBG7cvpbwD/4/XU/sU8g==
 
-ceph_mount_ceph_mountpoint: /volumes/_nogroup/uuid-fake
+ceph_mount_ceph_share_id: 2c6b0b4a-5fe5-48ea-a67c-90dd77a0b2c0
+ceph_mount_ceph_mountpoint: "/volumes/_nogroup/{{ ceph_mount_ceph_share_id}}"
+
+# By default we try to unmount (ignore errors) and mount again
+ceph_mount_do_mount: True
+ceph_mount_do_unmount: True
