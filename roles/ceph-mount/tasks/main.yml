@@ -12,7 +12,18 @@
   when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'"
 
 - name: Configure ceph.conf
-  template: src=ceph.conf dest=~/ceph.conf
+  template: src=ceph.conf dest=/root/ceph.conf
 
 - name: Add user keyring
-  template: src=keyring.j2 dest="~/{{ ceph_mount_ceph_access_user }}.keyring"
+  template: src=keyring.j2 dest="/root/{{ ceph_mount_ceph_access_user }}.keyring"
+
+- name: Ensure mount directory exists
+  file:
+    path: /root/mnt
+    state: directory
+    mode: 0755
+
+- name: Mount the CephFS filesystem
+  command: "ceph-fuse /root/mnt --id={{ ceph_mount_ceph_access_user }} --conf=/root/ceph.conf --keyring=/root/{{ ceph_mount_ceph_access_user }}.keyring --client-mountpoint={{ ceph_mount_ceph_mountpoint}}"
+
+
