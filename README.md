@@ -29,7 +29,7 @@ You can use manila to create a CephFS share in a way similar to this:
 Then you should use the above to fill out roles/ceph-mount/vars/main.yml:
 
 	ceph_mount_ceph_mon_host: 10.0.10.101
-        ceph_mount_ceph_access_user: quicktest
+	ceph_mount_ceph_access_user: quicktest
 	ceph_mount_ceph_access_key: ABCBuPFZ7wNLExAAuWmBG7cvpbwD/4/XU/sU8g==
 	ceph_mount_ceph_share_id: 2c6b0b4a-5fe5-48ea-a67c-90dd77a0b2b0
 
