@@ -1,3 +1,0 @@
----
-# Whether to install package dependencies.
-ceph_manila_mount_install_package_dependencies: True

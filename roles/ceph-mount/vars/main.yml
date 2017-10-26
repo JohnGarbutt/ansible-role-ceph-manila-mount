@@ -1,0 +1,7 @@
+---
+
+ceph_mount_ceph_mon_host: localhost
+ceph_mount_ceph_mon_hostlist: "{{ ceph_mount_ceph_mon_host }}:6789"
+
+ceph_mount_ceph_access_user: user
+ceph_mount_ceph_access_key: FakeKey==
