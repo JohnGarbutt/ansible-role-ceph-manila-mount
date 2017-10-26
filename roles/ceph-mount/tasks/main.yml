@@ -1,0 +1,13 @@
+---
+- name: Install Ceph Jewl Repo
+  yum_repository:
+    name: ceph-release
+    description: Ceph Jewl Repo
+    file: ceph-release-1-1.el7.noarch.rpm
+    baseurl: http://download.ceph.com/rpm-jewel/el7/noarch/
+  when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'"
+
+- name: Install ceph packages for mount and unmount
+  yum: name=epel-release,ceph-common,ceph-fuse,fuse
+  when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'"
+
