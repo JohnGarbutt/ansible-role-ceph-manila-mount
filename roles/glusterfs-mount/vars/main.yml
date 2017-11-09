@@ -1,0 +1,4 @@
+---
+
+glusterfs_host: 10.60.253.38
+glusterfs_path: /simple-striped
