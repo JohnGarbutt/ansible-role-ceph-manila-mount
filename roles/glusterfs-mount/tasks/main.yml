@@ -14,4 +14,4 @@
     path: /root/mnt
     src: "{{glusterfs_host}}:{{glusterfs_path}}"
     fstype: glusterfs
-    state: present
+    state: mounted
