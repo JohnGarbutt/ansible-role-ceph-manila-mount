@@ -3,6 +3,20 @@
   yum: name=epel-release,glusterfs-client,glusterfs-rdma,glusterfs-fuse
   when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'"
 
+- lineinfile:
+    path: /etc/hosts
+    line: '10.60.253.38 orange-data-0.novalocal orange-data-0'
+    owner: root
+    group: root
+    mode: 0644
+
+- lineinfile:
+    path: /etc/hosts
+    line: '10.60.253.43 orange-data-1.novalocal orange-data-1'
+    owner: root
+    group: root
+    mode: 0644
+
 - name: Ensure mount directory exists
   file:
     path: /root/mnt
@@ -15,3 +29,4 @@
     src: "{{glusterfs_host}}:{{glusterfs_path}}"
     fstype: glusterfs
     state: mounted
+
