@@ -2,3 +2,8 @@
 
 glusterfs_host: 10.60.253.38
 glusterfs_path: /simple-striped
+
+gluster_bricks: [
+    '10.60.253.38 orange-data-0.novalocal orange-data-0',
+    '10.60.253.43 orange-data-1.novalocal orange-data-1'
+]
