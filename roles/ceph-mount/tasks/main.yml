@@ -1,14 +1,25 @@
 ---
-- name: Install Ceph Jewl Repo
+- name: Install Ceph Jewl noarch Repo
   yum_repository:
-    name: ceph-release
+    name: ceph-jewl-noarch
     description: Ceph Jewl Repo
-    file: ceph-release-1-1.el7.noarch.rpm
     baseurl: http://download.ceph.com/rpm-jewel/el7/noarch/
+    gpgkey: https://git.ceph.com/?p=ceph.git;a=blob_plain;f=keys/release.asc
   when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'"
 
+- name: Install Ceph Jewl Repo
+  yum_repository:
+    name: ceph-jewl-arch
+    description: Ceph Jewl Repo
+    baseurl: http://download.ceph.com/rpm-jewel/el7/$basearch/
+    gpgkey: https://git.ceph.com/?p=ceph.git;a=blob_plain;f=keys/release.asc
+  when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'"
+
+- name: Install epel
+  yum: name=epel-release
+
 - name: Install ceph packages for mount and unmount
-  yum: name=epel-release,ceph-common,ceph-fuse,fuse
+  yum: name=ceph-common,ceph-fuse,fuse
   when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'"
 
 - name: Configure ceph.conf
@@ -19,17 +30,17 @@
 
 - name: Ensure mount directory exists
   file:
-    path: /root/mnt
+    path: /root/ceph_mnt
     state: directory
     mode: 0755
 
 - name: Unmount the CephFS filesystem
-  command: "fusermount -u /root/mnt"
+  command: "fusermount -u /root/ceph_mnt"
   when: ceph_mount_do_unmount
   ignore_errors: "{{ ceph_mount_do_mount }}"
   tags: unmount
   
 - name: Mount the CephFS filesystem
-  command: "ceph-fuse /root/mnt --id={{ ceph_mount_ceph_access_user }} --conf=/root/ceph.conf --keyring=/root/{{ ceph_mount_ceph_access_user }}.keyring --client-mountpoint={{ ceph_mount_ceph_mountpoint}}"
+  command: "ceph-fuse /root/ceph_mnt --id={{ ceph_mount_ceph_access_user }} --conf=/root/ceph.conf --keyring=/root/{{ ceph_mount_ceph_access_user }}.keyring --client-mountpoint={{ ceph_mount_ceph_mountpoint}}"
   when: ceph_mount_do_mount
   tags: mount
