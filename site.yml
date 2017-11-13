@@ -18,3 +18,4 @@
 
   roles:
     - prometheus-server
+    - hibd-bench
