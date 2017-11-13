@@ -8,7 +8,7 @@ global:
       monitor: 'sahara-test'
 
 rule_files:
-  - "alerts.rules"
+  # TODO  - "alerts.rules"
 
 scrape_configs:
   - job_name: 'prometheus'
