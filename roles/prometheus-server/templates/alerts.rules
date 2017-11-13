@@ -1,5 +1,6 @@
 # {{ ansible_managed }}
 
+{% raw %}
 ALERT InstanceDown
   IF up{job="node"} == 0
   FOR 5m
@@ -16,3 +17,4 @@ ALERT DummyInfiniBandTrafficHigh
   ANNOTATIONS {
     summary = "Instance {{ $labels.instance }} high traffic on {{ $labels.device}}"
   }
+{% endraw %}
