@@ -34,11 +34,6 @@
     state: started
     enabled: yes
 
-- name: Upgrade pip
-  pip:
-    name: pip
-    state: latest
-
 - name: Remove old docker python
   pip:
     name: docker
