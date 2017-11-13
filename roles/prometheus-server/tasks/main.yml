@@ -69,7 +69,7 @@
             "basicAuth": false,
             "basicAuthUser": "",
             "basicAuthPassword": "",
-            "isDefault": false,
+            "isDefault": true,
             "jsonData": null }'
   when: datasources.json == []
 
