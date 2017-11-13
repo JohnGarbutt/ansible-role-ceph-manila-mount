@@ -6,7 +6,7 @@
   become_method: sudo
   
   roles:
-    - ceph-mount # TODO - glusterfs-mount
+    #- ceph-mount # TODO - glusterfs-mount
     - docker
     - prometheus-docker-node
 
