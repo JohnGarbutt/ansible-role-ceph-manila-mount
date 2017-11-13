@@ -1,10 +1,5 @@
 ---
 # https://github.com/geerlingguy/ansible-role-docker/blob/master/tasks/setup-RedHat.yml
-- vars:
-    docker_edition: 'ce'
-    docker_yum_repo_url: https://download.docker.com/linux/centos/docker-{{ docker_edition }}.repo
-    docker_package: "docker-{{ docker_edition }}"
-    docker_package_state: present
 
 - name: Ensure old versions of Docker are not installed.
   package:
