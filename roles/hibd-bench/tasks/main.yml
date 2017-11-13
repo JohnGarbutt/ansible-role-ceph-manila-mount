@@ -6,7 +6,7 @@
 
 - name: Extract benchmarks
   unarchive:
-    src: osu-hibd-benchmarks-0.9.2.tar.gz
+    src: /home/centos/osu-hibd-benchmarks-0.9.2.tar.gz
     dest: /home/centos/osu-hibd-benchmarks-0.9.2
 
 - name: Install maven
