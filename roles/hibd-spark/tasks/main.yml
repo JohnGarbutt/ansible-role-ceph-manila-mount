@@ -1,0 +1,26 @@
+---
+- name: Add slaves config
+  template:
+    src: slaves
+    dest: "{{ hibd_spark_home }}/conf/slaves"
+
+- name: Add spark-env
+  template:
+    src: spark-env.sh
+    dest: "{{ hibd_spark_home }}/conf/spark-env.sh"
+
+- name: Add spark-defaults
+  template:
+    src: spark-defaults.conf
+    dest: "{{ hibd_spark_home }}/conf/spark-defaults.conf"
+
+- name: Install python3
+  package:
+    name: python3-pip
+
+- name: Stop all spark processes
+  command: "{{ hibd_spark_home }}/sbin/stop_all.sh"
+  ignore_errors: true
+
+- name: Start all spark processes
+  command: "{{ hibd_spark_home }}/sbin/start_all.sh"

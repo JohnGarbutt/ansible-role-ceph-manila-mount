@@ -9,6 +9,7 @@
     #- ceph-mount # TODO - glusterfs-mount
     - docker
     - prometheus-docker-node
+    - hibd-spark
 
 - hosts: master
   remote_user: centos
