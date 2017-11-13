@@ -51,9 +51,6 @@
     return_content: yes
   register: datasources
 
-- debug:
-    msg: "Return value: {{ datasources.json }}"
-
 - name: Add datasource
   uri:
     url: "http://{{ ansible_host}}:3000/api/datasources"
@@ -74,4 +71,30 @@
             "basicAuthPassword": "",
             "isDefault": false,
             "jsonData": null }'
+  when: datasources.json == []
+
+- name: check datasource
+  uri:
+    url: "http://{{ ansible_host}}:3000/api/search?query=Spark"
+    method: GET
+    user: admin
+    password: admin
+    force_basic_auth: yes
+    return_content: yes
+  register: dashboards
+
+- debug:
+    msg: "Return value: {{ dashboards.json }}"
+
+- name: Add dashboard
+  uri:
+    url: "http://{{ ansible_host}}:3000/api/datasources"
+    method: POST
+    user: admin
+    password: admin
+    force_basic_auth: yes
+    status_code: 200
+    body_format: json
+    body: '{"dashboard: {{ lookup("template","grafana_dashboard.json") }},
+            "overwrite": "false"}'
   when: datasources.json == []
