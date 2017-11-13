@@ -97,4 +97,4 @@
     body_format: json
     body: '{"dashboard: {{ lookup("template","grafana_dashboard.json") }},
             "overwrite": "false"}'
-  when: datasources.json == []
+  when: dashboards.json == []
