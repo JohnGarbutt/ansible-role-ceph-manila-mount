@@ -39,6 +39,11 @@
     name: docker-py
     state: absent
 
+- name: Upgrade pip
+  pip:
+    name: pip
+    state: latest
+
 - name: Ensure Docker python lib is installed for ansible tasks
   pip:
     name: docker
