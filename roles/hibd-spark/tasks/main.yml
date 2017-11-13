@@ -1,4 +1,13 @@
 ---
+- name: Allow access to centos user
+  lineinfile:
+    path: /home/centos/.ssh/authorized_keys
+    line: "{{ item }}"
+    owner: centos
+    group: centos
+    mode: 0600
+  with_items: "{{ hibd_spark_allowed_ssh_keys }}"
+
 - name: Add slaves config
   template:
     src: slaves
