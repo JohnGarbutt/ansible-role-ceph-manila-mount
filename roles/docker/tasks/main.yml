@@ -34,6 +34,10 @@
     state: started
     enabled: yes
 
+- name: Add pip so we can install python libs
+  package:
+    name: python-pip
+
 - name: Add docker python lib
   pip:
     name: docker
