@@ -34,12 +34,7 @@
     state: started
     enabled: yes
 
-- name: Remove old docker python
+- name: Add docker python lib
   pip:
     name: docker
-    state: absent
-
-- name: Ensure Docker python lib is installed for ansible tasks
-  pip:
-    name: docker-py
     state: latest
