@@ -33,3 +33,7 @@
     name: docker
     state: started
     enabled: yes
+
+- name: Ensure Docker python lib is installed for ansible tasks
+  pip:
+    name: docker
