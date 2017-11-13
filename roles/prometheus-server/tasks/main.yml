@@ -64,7 +64,7 @@
     status_code: 200
     body_format: json
     body: '{"name": "Prometheus",
-            "type": "prometheus"),
+            "type": "prometheus",
             "access": "proxy",
             "url": "http://{{ ansible_host }}:9090",
             "password": "",
@@ -72,5 +72,6 @@
             "basicAuth": false,
             "basicAuthUser": "",
             "basicAuthPassword": "",
-            "isDefault": false),
-            "jsonData": null }"'
+            "isDefault": false,
+            "jsonData": null }'
+  when: datasources.json == []
