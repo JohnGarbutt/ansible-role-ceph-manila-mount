@@ -1,2 +1,19 @@
 ---
+- name: Download benchmarks
+  get_url:
+    url: http://hibd.cse.ohio-state.edu/download/hibd/osu-hibd-benchmarks-0.9.2.tar.gz
+    dest: /home/centos/osu-hibd-benchmarks-0.9.2.tar.gz
 
+- name: Extract benchmarks
+  unarchive:
+    src: osu-hibd-benchmarks-0.9.2.tar.gz
+    dest: /home/centos/osu-hibd-benchmarks-0.9.2
+
+- name: Install maven
+  package:
+    name: maven
+
+- name: Build spark bench
+  command: mvn clean package
+  args:
+    chdir: /home/centos/osu-hibd-benchmarks-0.9.2

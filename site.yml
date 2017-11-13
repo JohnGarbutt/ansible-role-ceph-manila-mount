@@ -18,4 +18,10 @@
 
   roles:
     - prometheus-server
+
+- hosts: master
+  remote_user: centos
+  become: no
+
+  roles:
     - hibd-bench
