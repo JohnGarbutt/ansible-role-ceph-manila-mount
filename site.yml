@@ -11,6 +11,9 @@
     - prometheus-docker-node
 
 - hosts: master
+  remote_user: centos
+  become: yes
+  become_method: sudo
 
   roles:
     - prometheus-server
