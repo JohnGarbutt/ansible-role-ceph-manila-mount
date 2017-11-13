@@ -39,7 +39,7 @@ scrape_configs:
         - netstat
         - infiniband
 
- - job_name: 'cAdvisor'
+  - job_name: 'cAdvisor'
     scrape_interval: 15s
     static_configs:
       - targets:
