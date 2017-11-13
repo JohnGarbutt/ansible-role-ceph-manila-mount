@@ -14,7 +14,7 @@
     privileged: yes
     detach: yes
     ports:
-      - 9080:8080  # stop clash with spark master
+      - 9081:8080  # stop clash with spark master
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
