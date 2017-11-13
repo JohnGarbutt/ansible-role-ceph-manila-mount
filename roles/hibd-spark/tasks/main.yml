@@ -28,8 +28,8 @@
     name: python34-pip
 
 - name: Stop all spark processes
-  command: "{{ hibd_spark_home }}/sbin/stop-all.sh"
+  command: "su hadoop {{ hibd_spark_home }}/sbin/stop-all.sh"
   ignore_errors: true
 
 - name: Start all spark processes
-  command: "{{ hibd_spark_home }}/sbin/start-all.sh"
+  command: "su hadoop {{ hibd_spark_home }}/sbin/start-all.sh"
