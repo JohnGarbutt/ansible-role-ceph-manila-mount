@@ -41,10 +41,10 @@
 
 - name: Remove old docker python
   pip:
-    name: docker-py
+    name: docker
     state: absent
 
 - name: Ensure Docker python lib is installed for ansible tasks
   pip:
-    name: docker
+    name: docker-py
     state: latest
