@@ -1,7 +1,4 @@
 ---
-- vars:
-    prometheus_home: /home/centos/prometheus
-
 - name: Create prometheus data dir
   file:
     path: "{{ prometheus_home }}/data"
