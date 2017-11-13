@@ -1,11 +1,16 @@
 ---
-# This playbook mounts a ceph filesystem
 
-- hosts: ceph-mount-servers
+- hosts: all
   remote_user: centos
   become: yes
   become_method: sudo
   
   roles:
-    #- ceph-mount
-    - glusterfs-mount
+    - ceph-mount # TODO - glusterfs-mount
+    - docker
+    - prometheus-docker-node
+
+- hosts: master
+
+  roles:
+    - prometheus-server

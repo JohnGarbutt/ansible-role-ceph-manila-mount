@@ -1,3 +1,5 @@
-[ceph-mount-servers]
+[master]
 10.60.253.143
+
+[slave]
 10.60.253.140
