@@ -28,7 +28,7 @@
 
 - name: Create Grafana dir
   file:
-    path: "{{ prometheus_home }}/data"
+    path: "/var/lib/grafana"
     state: directory
     mode: 0755
 
@@ -40,3 +40,37 @@
       - 3000:3000  # TODO - add more config, github OAuth?
     volumes:
       - /var/lib/grafana
+
+- name: check datasource
+  uri:
+    url: "http://{{ ansible_host}}:3000/api/datasources"
+    method: GET
+    user: admin
+    password: admin
+    force_basic_auth: yes
+    return_content: yes
+  register: datasources
+
+- debug:
+    msg: "Return value: {{ datasources.json }}"
+
+- name: Add datasource
+  uri:
+    url: "http://{{ ansible_host}}:3000/api/datasources"
+    method: POST
+    user: admin
+    password: admin
+    force_basic_auth: yes
+    status_code: 200
+    body_format: json
+    body: '{"name": "Prometheus",
+            "type": "prometheus"),
+            "access": "proxy",
+            "url": "http://{{ ansible_host }}:9090",
+            "password": "",
+            "user": "",
+            "basicAuth": false,
+            "basicAuthUser": "",
+            "basicAuthPassword": "",
+            "isDefault": false),
+            "jsonData": null }"'
