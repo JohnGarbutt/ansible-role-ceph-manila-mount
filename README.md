@@ -16,9 +16,13 @@ If you need to install ansible, you could do this:
 	pip install -U pip
 	pip install ansible
 
-You can run the playbook like this to mount the filesystem:
+You can run all the playbooks, you can do:
 
-	ansible-playbook -i alt-1 master.yml
+	ansible-playbook master.yml
+
+If you just want to run the benchmarks you can do this:
+
+    ansible-playbook ansible-playbook playbooks/groups/bench.yml
 
 Please let us know how it goes. Pull requests are very welcome.
 
