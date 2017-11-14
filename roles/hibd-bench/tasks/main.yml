@@ -15,7 +15,13 @@
     name: maven
   become: true
 
+- name: Check if already built
+  stat:
+    path: /home/centos/osu-hibd-benchmarks-0.9.2/spark/target/ohb-spark-0.9.2.jar
+  register: ohb_bench_spark
+
 - name: Build spark bench
   command: mvn clean package
   args:
     chdir: /home/centos/osu-hibd-benchmarks-0.9.2/spark
+  when: ohb_bench_spark.stat.exists == False
