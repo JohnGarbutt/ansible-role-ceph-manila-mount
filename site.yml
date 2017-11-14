@@ -1,9 +1,7 @@
 ---
 
 - hosts: all
-  remote_user: centos
   become: yes
-  become_method: sudo
   
   roles:
     #- ceph-mount # TODO - glusterfs-mount
@@ -12,22 +10,18 @@
     - hibd-spark
 
 - hosts: master
-  remote_user: centos
   become: yes
-  become_method: sudo
 
   roles:
     - prometheus-server
 
 - hosts: master
-  remote_user: centos
   become: no
 
   roles:
     - hibd-bench
 
 - hosts: master
-  remote_user: centos
   become: yes
 
   roles:
