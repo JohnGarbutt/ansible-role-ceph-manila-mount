@@ -3,8 +3,5 @@
   become: yes
   
   roles:
-    #- ceph-mount # TODO - glusterfs-mount
-    - docker
-    - prometheus-docker-node
     - prometheus-server
     - hibd-spark

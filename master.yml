@@ -1,4 +1,5 @@
 ---
-- import_playbook: playbooks/groups/master.yml
+- import_playbook: playbooks/groups/all.yml
 - import_playbook: playbooks/groups/slave.yml
+- import_playbook: playbooks/groups/master.yml
 - import_playbook: playbooks/groups/bench.yml
