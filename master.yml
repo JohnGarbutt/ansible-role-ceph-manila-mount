@@ -1,4 +1,4 @@
 ---
-- include: playbooks/groups/master.yml
-- include: playbooks/groups/slave.yml
-- include: playbooks/groups/bench.yml
+- import_playbook: playbooks/groups/master.yml
+- import_playbook: playbooks/groups/slave.yml
+- import_playbook: playbooks/groups/bench.yml
