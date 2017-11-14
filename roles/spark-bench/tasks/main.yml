@@ -36,7 +36,8 @@
 
     export SB_HOME=/home/centos/spark-bench_2.1.1_0.2.2-RELEASE
     $SB_HOME/bin/spark-bench.sh $SB_HOME/examples/generate-files.conf
-  creates: /home/hadoop/kmeans-medium
+  args:
+    creates: /home/centos/kmeans-medium
 
 - name: Run kmeans benchmark
   shell: |
@@ -45,3 +46,5 @@
 
     export SB_HOME=/home/centos/spark-bench_2.1.1_0.2.2-RELEASE
     $SB_HOME/bin/spark-bench.sh $SB_HOME/examples/kmeans.conf
+  args:
+    creates: /tmp/kmeans-medium-run
