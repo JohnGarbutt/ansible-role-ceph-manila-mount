@@ -100,8 +100,6 @@
   when: '{{ item.value|bool }}'
   notify: restart agent
 
-- import_playbook: plugins.yml
-
 # Additional python deps for docker monitoring
 # TODO - should look at installing docker instead of docker-py
 - name: install docker-py into virtualenv
