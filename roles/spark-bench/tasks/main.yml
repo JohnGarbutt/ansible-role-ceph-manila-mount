@@ -3,12 +3,14 @@
   get_url:
     url: https://github.com/SparkTC/spark-bench/releases/download/v55/spark-bench_2.1.1_0.2.2-RELEASE_55.tgz
     dest: /opt/spark/spark-bench_2.1.1_0.2.2-RELEASE.tar.gz
+  become: yes
 
 - name: Extract spark-bench
   unarchive:
     src: /opt/spark/spark-bench_2.1.1_0.2.2-RELEASE.tar.gz
     dest: /opt/spark
     remote_src: yes
+  become: yes
 
 - name: Run spark-bench example
   shell: |
@@ -18,16 +20,19 @@
     export SB_HOME=/opt/spark/spark-bench_2.1.1_0.2.2-RELEASE
     $SB_HOME/bin/spark-bench.sh $SB_HOME/examples/minimal-example.conf
   when: false
+  become_user: hadoop
 
 - name: Add generate conf
   template:
     src: generate-files.conf
     dest: /opt/spark/spark-bench_2.1.1_0.2.2-RELEASE/examples/generate-files.conf
+  become: yes
 
 - name: Add kmeans run conf
   template:
     src: kmeans.conf
     dest: /opt/spark/spark-bench_2.1.1_0.2.2-RELEASE/examples/kmeans.conf
+  become: yes
 
 - name: Generate kmeans files
   shell: |
