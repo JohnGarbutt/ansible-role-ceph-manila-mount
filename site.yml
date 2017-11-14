@@ -25,4 +25,10 @@
 
   roles:
     - hibd-bench
+
+- hosts: master
+  remote_user: centos
+  become: yes
+
+  roles:
     - spark-bench
