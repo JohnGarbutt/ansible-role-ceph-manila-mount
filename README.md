@@ -1,5 +1,28 @@
 # ansible-role-ceph-manila-mount
-Automate the mounting of manila provided Ceph FS share.
+
+This repository is being used to automate the customization of a spark cluster
+including:
+
+* Reconfigure spark to better make use of the current node size
+* Mounting CephFS and GlusterFS (usually provided by manila)
+* Adding access (currently via ssh-keys in centos user)
+* Adding Prometheus, Grafana, cAduditor for monitoring
+* Running OHB and spark-bench benchmarks
+
+If you need to install ansible, you could do this:
+
+	virtualenv .venv
+	. .venv/bin/activate
+	pip install -U pip
+	pip install ansible
+
+You can run the playbook like this to mount the filesystem:
+
+	ansible-playbook -i alt-1 master.yml
+
+Please let us know how it goes. Pull requests are very welcome.
+
+## Notes on Manila
 
 You can use manila to create a CephFS share in a way similar to this:
 
@@ -52,5 +75,3 @@ You can run the playbook like this to mount the filesystem:
 You can run the playbook like this to unmount the filesystem:
 
 	ansible-playbook -i hosts site.yml --skip-tags mount
-
-Please let us know how it goes. Pull requests are very welcome.
