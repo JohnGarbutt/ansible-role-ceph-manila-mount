@@ -28,6 +28,7 @@ Main:
   collector_restart_interval: 24
   dimensions:
     hostname: {{ ansible_hostname }}
+    app_name: {{ monasca_app_name }}
   hostname: {{ ansible_fqdn }}
   num_collector_threads: 1
   pool_full_max_retries: 4

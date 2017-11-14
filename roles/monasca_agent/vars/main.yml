@@ -2,9 +2,16 @@
 # Copyright StackHPC, 2016
 #
 ---
+# Variables you need to override for each deployment
+monasca_agent_keystone: http://localhost:5000
+monasca_agent_password: password
+monasca_agent_project: project
+monasca_agent_user: user
+monasca_app_name: example-app
 monasca_agent_git_repo: https://github.com/openstack/monasca-agent
 monasca_agent_git_rev: stable/pike
 
+# These defaults might be fine for you
 monasca_agent_venv: /opt/monasca-agent
 monasca_agent_plugins_enable:
   cpu: True
