@@ -50,8 +50,7 @@
     path: /tmp/kmeans-medium-run
   register: check_kmeans
 
-- prompt:
-    msg: "If you want to run kmeans benchmark, delete /tmp/kmeans-medium-run"
+- prompt: "If you want to run kmeans benchmark, delete /tmp/kmeans-medium-run"
   when: check_kmeans.stat.exists == True
 
 - name: Run kmeans benchmark
