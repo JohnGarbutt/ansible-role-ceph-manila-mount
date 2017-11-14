@@ -39,6 +39,12 @@
   args:
     creates: /home/centos/kmeans-medium
 
+- name: Copy kmeans files to slave
+  synchronize:
+    src: /home/centos/kmeans-medium
+    dest: rsync://{{ item }}/home/centos/kmeans-medium
+  with_items: groups['slave']
+
 - name: Run kmeans benchmark
   shell: |
     export SPARK_HOME=/opt/spark
