@@ -1,2 +1,3 @@
 ---
 openstack_auth_url: http://10.60.253.128:5000/v3
+ansible_user: centos
