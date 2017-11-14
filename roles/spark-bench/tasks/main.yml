@@ -42,8 +42,11 @@
 - name: Copy kmeans files to slave
   synchronize:
     src: /home/centos/kmeans-medium
-    dest: rsync://{{ item }}/home/centos/kmeans-medium
-  with_items: groups['slave']
+    dest: "rsync://{{ item }}/home/centos/kmeans-medium"
+  with_items: "{{ groups['slave'] }}"
+  become: yes
+  become_method: su
+  become_user: hadoop
 
 - name: Run kmeans benchmark
   shell: |
