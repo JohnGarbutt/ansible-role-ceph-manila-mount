@@ -20,7 +20,7 @@
     export SB_HOME=/opt/spark/spark-bench_2.1.1_0.2.2-RELEASE
     $SB_HOME/bin/spark-bench.sh $SB_HOME/examples/minimal-example.conf
   when: false
-  become_user: hadoop
+  become: yes
 
 - name: Add generate conf
   template:
@@ -43,20 +43,20 @@
     $SB_HOME/bin/spark-bench.sh $SB_HOME/examples/generate-files.conf
   args:
     creates: /home/hadoop/kmeans-medium
-  become_user: hadoop
+  become: yes
 
 - name: Copy kmeans files to slave
-  command: "rsync -r /home/hadoop/kmeans-medium hadoop@{{ item }}:/home/hadoop/"
+  command: "su hadoop -c \"rsync -r /home/hadoop/kmeans-medium hadoop@{{ item }}:/home/hadoop/\""
   with_items: "{{ groups['slave'] }}"
-  become_user: hadoop
+  become: yes
 
 - name: Run kmeans benchmark
   shell: |
     export SPARK_HOME=/opt/spark
     export SPARK_MASTER_HOST=spark://{{ ansible_host }}:7077
 
-    export SB_HOME=/home/hadoop/spark-bench_2.1.1_0.2.2-RELEASE
+    export SB_HOME=/opt/spark/spark-bench_2.1.1_0.2.2-RELEASE
     $SB_HOME/bin/spark-bench.sh $SB_HOME/examples/kmeans.conf
   args:
     creates: /tmp/kmeans-medium-run
-  become_user: hadoop
+  become: yes
