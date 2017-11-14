@@ -1,0 +1,11 @@
+- hosts: bench
+  become: no
+
+  roles:
+    - hibd-bench
+
+- hosts: bench
+  become: yes
+
+  roles:
+    - spark-bench

@@ -3,3 +3,6 @@
 
 [slave]
 10.60.253.146
+
+[bench:children]
+master

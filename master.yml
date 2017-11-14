@@ -1,28 +1,4 @@
 ---
-
-- hosts: all
-  become: yes
-  
-  roles:
-    #- ceph-mount # TODO - glusterfs-mount
-    - docker
-    - prometheus-docker-node
-    - hibd-spark
-
-- hosts: master
-  become: yes
-
-  roles:
-    - prometheus-server
-
-- hosts: master
-  become: no
-
-  roles:
-    - hibd-bench
-
-- hosts: master
-  become: yes
-
-  roles:
-    - spark-bench
+- include: playbooks/groups/master.yml
+- include: playbooks/groups/slave.yml
+- include: playbooks/groups/bench.yml
