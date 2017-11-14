@@ -17,3 +17,30 @@
 
     export SB_HOME=/home/centos/spark-bench_2.1.1_0.2.2-RELEASE
     $SB_HOME/bin/spark-bench.sh $SB_HOME/examples/minimal-example.conf
+
+- name: Add generate conf
+  template:
+    src: generate-files.conf
+    dest: /home/centos/spark-bench_2.1.1_0.2.2-RELEASE/examples/generate-files.conf
+
+- name: Add kmeans run conf
+  template:
+    src: kmeans.conf
+    dest: /home/centos/spark-bench_2.1.1_0.2.2-RELEASE/examples/kmeans.conf
+
+- name: Generate kmeans files
+  shell: |
+    export SPARK_HOME=/opt/spark
+    export SPARK_MASTER_HOST=spark://{{ ansible_host }}:7077
+
+    export SB_HOME=/home/centos/spark-bench_2.1.1_0.2.2-RELEASE
+    $SB_HOME/bin/spark-bench.sh $SB_HOME/examples/generate-files.conf
+  creates: /home/hadoop/kmeans-medium
+
+- name: Run kmeans benchmark
+  shell: |
+    export SPARK_HOME=/opt/spark
+    export SPARK_MASTER_HOST=spark://{{ ansible_host }}:7077
+
+    export SB_HOME=/home/centos/spark-bench_2.1.1_0.2.2-RELEASE
+    $SB_HOME/bin/spark-bench.sh $SB_HOME/examples/kmeans.conf
