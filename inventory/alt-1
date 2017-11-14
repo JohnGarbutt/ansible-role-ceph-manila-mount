@@ -6,3 +6,7 @@
 
 [bench:children]
 master
+
+[alt-1:children]
+master
+slave
