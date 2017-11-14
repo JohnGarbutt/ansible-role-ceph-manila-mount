@@ -25,3 +25,4 @@
 
   roles:
     - hibd-bench
+    - spark-bench
