@@ -54,10 +54,10 @@
 
 - name: Run OHB Spark benchmark
   shell: |
-    export OHB_HOME=/home/centos/osu-hibd-benchmarks-0.9.2
     export SPARK_HOME=/opt/spark
     export MASTER=spark://{{ ansible_host }}:7077
 
+    export OHB_HOME=/home/centos/osu-hibd-benchmarks-0.9.2
     export LARGE=655360
     export SMALL=120000
 
