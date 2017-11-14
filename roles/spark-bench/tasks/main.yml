@@ -1,63 +1,57 @@
 ---
-- tasks:
-  name: Configure spark-bench as hadoop user
-    block:
-        become: yes
-        become_method: su
-        become_user: hadoop
+- name: Download spark-bench
+  get_url:
+    url: https://github.com/SparkTC/spark-bench/releases/download/v55/spark-bench_2.1.1_0.2.2-RELEASE_55.tgz
+    dest: /opt/spark/spark-bench_2.1.1_0.2.2-RELEASE.tar.gz
 
-        - name: Download spark-bench
-          get_url:
-            url: https://github.com/SparkTC/spark-bench/releases/download/v55/spark-bench_2.1.1_0.2.2-RELEASE_55.tgz
-            dest: /home/hadoop/spark-bench_2.1.1_0.2.2-RELEASE.tar.gz
+- name: Extract spark-bench
+  unarchive:
+    src: /opt/spark/spark-bench_2.1.1_0.2.2-RELEASE.tar.gz
+    dest: /opt/spark
+    remote_src: yes
 
-        - name: Extract spark-bench
-          unarchive:
-            src: /home/hadoop/spark-bench_2.1.1_0.2.2-RELEASE.tar.gz
-            dest: /home/hadoop/
-            remote_src: yes
+- name: Run spark-bench example
+  shell: |
+    export SPARK_HOME=/opt/spark
+    export SPARK_MASTER_HOST=spark://{{ ansible_host }}:7077
 
-        - name: Run spark-bench example
-          shell: |
-            export SPARK_HOME=/opt/spark
-            export SPARK_MASTER_HOST=spark://{{ ansible_host }}:7077
+    export SB_HOME=/opt/spark/spark-bench_2.1.1_0.2.2-RELEASE
+    $SB_HOME/bin/spark-bench.sh $SB_HOME/examples/minimal-example.conf
+  when: false
 
-            export SB_HOME=/home/hadoop/spark-bench_2.1.1_0.2.2-RELEASE
-            $SB_HOME/bin/spark-bench.sh $SB_HOME/examples/minimal-example.conf
-          when: false
+- name: Add generate conf
+  template:
+    src: generate-files.conf
+    dest: /opt/spark/spark-bench_2.1.1_0.2.2-RELEASE/examples/generate-files.conf
 
-        - name: Add generate conf
-          template:
-            src: generate-files.conf
-            dest: /home/hadoop/spark-bench_2.1.1_0.2.2-RELEASE/examples/generate-files.conf
+- name: Add kmeans run conf
+  template:
+    src: kmeans.conf
+    dest: /opt/spark/spark-bench_2.1.1_0.2.2-RELEASE/examples/kmeans.conf
 
-        - name: Add kmeans run conf
-          template:
-            src: kmeans.conf
-            dest: /home/hadoop/spark-bench_2.1.1_0.2.2-RELEASE/examples/kmeans.conf
+- name: Generate kmeans files
+  shell: |
+    export SPARK_HOME=/opt/spark
+    export SPARK_MASTER_HOST=spark://{{ ansible_host }}:7077
 
-        - name: Generate kmeans files
-          shell: |
-            export SPARK_HOME=/opt/spark
-            export SPARK_MASTER_HOST=spark://{{ ansible_host }}:7077
+    export SB_HOME=/opt/spark/spark-bench_2.1.1_0.2.2-RELEASE
+    $SB_HOME/bin/spark-bench.sh $SB_HOME/examples/generate-files.conf
+  args:
+    creates: /home/hadoop/kmeans-medium
+  become_user: hadoop
 
-            export SB_HOME=/home/hadoop/spark-bench_2.1.1_0.2.2-RELEASE
-            $SB_HOME/bin/spark-bench.sh $SB_HOME/examples/generate-files.conf
-          args:
-            creates: /home/hadoop/kmeans-medium
+- name: Copy kmeans files to slave
+  command: "rsync -r /home/hadoop/kmeans-medium hadoop@{{ item }}:/home/hadoop/"
+  with_items: "{{ groups['slave'] }}"
+  become_user: hadoop
 
-        - name: Copy kmeans files to slave
-          synchronize:
-            src: /home/hadoop/kmeans-medium
-            dest: "rsync://{{ item }}/home/hadoop/kmeans-medium"
-          with_items: "{{ groups['slave'] }}"
+- name: Run kmeans benchmark
+  shell: |
+    export SPARK_HOME=/opt/spark
+    export SPARK_MASTER_HOST=spark://{{ ansible_host }}:7077
 
-        - name: Run kmeans benchmark
-          shell: |
-            export SPARK_HOME=/opt/spark
-            export SPARK_MASTER_HOST=spark://{{ ansible_host }}:7077
-
-            export SB_HOME=/home/hadoop/spark-bench_2.1.1_0.2.2-RELEASE
-            $SB_HOME/bin/spark-bench.sh $SB_HOME/examples/kmeans.conf
-          args:
-            creates: /tmp/kmeans-medium-run
+    export SB_HOME=/home/hadoop/spark-bench_2.1.1_0.2.2-RELEASE
+    $SB_HOME/bin/spark-bench.sh $SB_HOME/examples/kmeans.conf
+  args:
+    creates: /tmp/kmeans-medium-run
+  become_user: hadoop
