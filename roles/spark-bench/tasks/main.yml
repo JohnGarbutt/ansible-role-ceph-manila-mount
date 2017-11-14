@@ -17,6 +17,7 @@
 
     export SB_HOME=/home/centos/spark-bench_2.1.1_0.2.2-RELEASE
     $SB_HOME/bin/spark-bench.sh $SB_HOME/examples/minimal-example.conf
+  when: false
 
 - name: Add generate conf
   template:
