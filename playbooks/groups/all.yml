@@ -4,5 +4,6 @@
 
   roles:
     #- ceph-mount # TODO - glusterfs-mount
+    - monasca_agent
     - docker
     - prometheus-docker-node

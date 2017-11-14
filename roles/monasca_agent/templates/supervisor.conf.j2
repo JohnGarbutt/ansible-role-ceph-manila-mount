@@ -1,0 +1,48 @@
+[supervisorctl]
+serverurl = unix:///var/tmp/monasca-agent-supervisor.sock
+
+[unix_http_server]
+file=/var/tmp/monasca-agent-supervisor.sock
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+
+[supervisord]
+minfds = 1024
+minprocs = 200
+loglevel = info
+logfile = /var/log/monasca/agent/supervisord.log
+logfile_maxbytes = 50MB
+nodaemon = false
+pidfile = /var/run/monasca-agent-supervisord.pid
+logfile_backups = 10
+
+[program:collector]
+command=/opt/monasca-agent/bin/monasca-collector foreground
+stdout_logfile=/var/log/monasca/agent/collector.stdout.log
+stderr_logfile=/var/log/monasca/agent/collector.stderr.log
+priority=999
+startsecs=2
+user=root
+autorestart=true
+
+[program:forwarder]
+command=/opt/monasca-agent/bin/monasca-forwarder
+stdout_logfile=/var/log/monasca/agent/forwarder.stdout.log
+stderr_logfile=/var/log/monasca/agent/forwarder.stderr.log
+startsecs=3
+priority=998
+user=root
+autorestart=true
+
+[program:statsd]
+command=/opt/monasca-agent/bin/monasca-statsd
+stdout_logfile=/var/log/monasca/agent/statsd.stdout.log
+stderr_logfile=/var/log/monasca/agent/statsd.stderr.log
+startsecs=3
+priority=998
+user=root
+autorestart=true
+
+[group:monasca-agent]
+programs=forwarder,collector,statsd

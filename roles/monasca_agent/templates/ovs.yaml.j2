@@ -1,0 +1,22 @@
+---
+init_config:
+  admin_password: {{ monasca_agent_admin_password }}
+  admin_tenant_name: {{ monasca_agent_admin_tenant_name }}
+  admin_user: {{ monasca_agent_admin_user }}
+  neutron_refresh: 14400
+  identity_uri: {{ monasca_agent_libvirt_keystone }}
+  region_name: {{ monasca_agent_region }}
+  cache_dir: /dev/shm
+  metadata:
+  - tenant_name
+  ovs_cmd: 'sudo /usr/bin/ovs-vsctl' 
+  included_interface_re: qg.*|vhu.*|sg.*
+  network_use_bits: false
+  use_absolute_metrics: true
+  use_rate_metrics: true
+  use_health_metrics: true
+  publish_router_capacity: true
+
+instances:
+ - {}
+ 

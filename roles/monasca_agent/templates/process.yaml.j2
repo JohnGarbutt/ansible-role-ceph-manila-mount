@@ -1,0 +1,357 @@
+init_config: null
+instances:
+
+# Glance
+- built_by: Glance
+  detailed: true
+  dimensions:
+    component: glance-api
+    service: image-service
+  exact_match: false
+  name: glance-api
+  search_string:
+  - glance-api
+- built_by: Glance
+  detailed: true
+  dimensions:
+    component: glance-registry
+    service: image-service
+  exact_match: false
+  name: glance-registry
+  search_string:
+  - glance-registry
+
+- built_by: MonInfluxDB
+  detailed: true
+  dimensions:
+    component: influxd
+    service: monitoring
+  exact_match: false
+  name: influxd
+  search_string:
+  - influxd
+- built_by: MonAgent
+  detailed: true
+  dimensions:
+    component: monasca-agent
+    service: monitoring
+  name: monasca-agent
+  username: mon-agent
+- built_by: MonThresh
+  detailed: true
+  dimensions:
+    component: apache-storm
+    service: monitoring
+  name: monasca-thresh
+  username: storm
+
+- built_by: Nova
+  detailed: true
+  dimensions:
+    component: nova-api
+    service: compute
+  exact_match: false
+  name: nova-api
+  search_string:
+  - nova-api
+- built_by: Nova
+  detailed: true
+  dimensions:
+    component: nova-compute
+    service: compute
+  exact_match: false
+  name: nova-compute
+  search_string:
+  - nova-compute
+- built_by: Nova
+  detailed: true
+  dimensions:
+    component: nova-conductor
+    service: compute
+  exact_match: false
+  name: nova-conductor
+  search_string:
+  - nova-conductor
+- built_by: Nova
+  detailed: true
+  dimensions:
+    component: nova-consoleauth
+    service: compute
+  exact_match: false
+  name: nova-consoleauth
+  search_string:
+  - nova-consoleauth
+- built_by: Nova
+  detailed: true
+  dimensions:
+    component: nova-novncproxy
+    service: compute
+  exact_match: false
+  name: nova-novncproxy
+  search_string:
+  - nova-novncproxy
+- built_by: Nova
+  detailed: true
+  dimensions:
+    component: nova-scheduler
+    service: compute
+  exact_match: false
+  name: nova-scheduler
+  search_string:
+  - nova-scheduler
+- built_by: MonThresh
+  detailed: false
+  dimensions:
+    component: apache-storm
+    service: monitoring
+  exact_match: false
+  name: storm.daemon.nimbus
+  search_string:
+  - storm.daemon.nimbus
+- built_by: MonThresh
+  detailed: false
+  dimensions:
+    component: apache-storm
+    service: monitoring
+  exact_match: false
+  name: storm.daemon.supervisor
+  search_string:
+  - storm.daemon.supervisor
+
+# OpenStack Related
+
+# Ironic
+- built_by: Ironic
+  detailed: true
+  dimensions:
+    component: ironic-api
+    service: baremetal
+  exact_match: false
+  name: ironic-api
+  search_string:
+  - ironic-api
+- built_by: Ironic
+  detailed: true
+  dimensions:
+    component: ironic-conductor
+    service: baremetal
+  exact_match: false
+  name: ironic-conductor
+  search_string:
+  - ironic-conductor
+- built_by:
+  detailed: true
+  dimensions:
+    component: ironic-inspector
+    service: baremetal
+  exact_match: false
+  name: ironic-inspector
+  search_string:
+  - ironic-inspector
+- built_by:
+  detailed: true
+  dimensions:
+    component: ironic-pxe
+    service: baremetal
+  exact_match: false
+  name: in.tftpd
+  search_string:
+  - in.tftpd
+
+
+# Neutron
+- built_by: Neutron
+  detailed: true
+  dimensions:
+    component: neutron-dhcp-agent
+    service: networking
+  exact_match: false
+  name: neutron-dhcp-agent
+  search_string:
+  - neutron-dhcp-agent
+- built_by: Neutron
+  detailed: true
+  dimensions:
+    component: neutron-l3-agent
+    service: networking
+  exact_match: false
+  name: neutron-l3-agent
+  search_string:
+  - neutron-l3-agent
+- built_by: Neutron
+  detailed: true
+  dimensions:
+    component: neutron-metadata-agent
+    service: networking
+  exact_match: false
+  name: neutron-metadata-agent
+  search_string:
+  - neutron-metadata-agent
+- built_by: Neutron
+  detailed: true
+  dimensions:
+    component: neutron-openvswitch-agent
+    service: networking
+  exact_match: false
+  name: neutron-openvswitch-agent
+  search_string:
+  - neutron-openvswitch-agent
+- built_by: Neutron
+  detailed: true
+  dimensions:
+    component: neutron-server
+    service: networking
+  exact_match: false
+  name: neutron-server
+  search_string:
+  - neutron-server
+
+# OVS
+- built_by: Ovsvapp
+  detailed: true
+  dimensions:
+    component: ovs-vswitchd
+    service: OVSvApp-ServiceVM
+  exact_match: false
+  name: ovs-vswitchd
+  search_string:
+  - ovs-vswitchd
+- built_by: Ovsvapp
+  detailed: true
+  dimensions:
+    component: ovsdb-server
+    service: OVSvApp-ServiceVM
+  exact_match: false
+  name: ovsdb-server
+  search_string:
+  - ovsdb-server
+  
+# Heat
+- built_by: Heat
+  detailed: true
+  dimensions:
+    component: heat-api-cfn
+    service: orchestration
+  exact_match: false
+  name: heat-api-cfn
+  search_string:
+  - heat-api-cfn
+- built_by: Heat
+  detailed: true
+  dimensions:
+    component: heat-engine
+    service: orchestration
+  exact_match: false
+  name: heat-engine
+  search_string:
+  - heat-engine
+- built_by:
+  detailed: true
+  dimensions:
+    component: heat-api
+    service: orchestration
+  exact_match: false
+  name: heat-api
+  search_string:
+  - heat-api
+
+# Magnum
+- built_by:
+  detailed: true
+  dimensions:
+    component: magnum-conductor
+    service: container-infra
+  exact_match: false
+  name: magnum-conductor
+  search_string:
+  - magnum-conductor
+- built_by:
+  detailed: true
+  dimensions:
+    component: magnum-api
+    service: container-infra
+  exact_match: false
+  name: magnum-api
+  search_string:
+  - magnum-api
+
+# Used By OpenStack
+
+# RabbitMQ
+- built_by:
+  detailed: true
+  dimensions:
+    service: rabbitmq
+  exact_match: false
+  name: rabbitmq-server
+  search_string:
+  - rabbitmq-server
+- built_by:
+  detailed: true
+  dimensions:
+    service: rabbitmq
+  exact_match: false
+  name: epmd
+  search_string:
+  - epmd
+
+# MySQL / MariaDB
+- built_by:
+  detailed: true
+  dimensions:
+    service: mysql
+  exact_match: false
+  name: mysql
+  search_string:
+  - mysql
+
+# Memcached
+- built_by:
+  detailed: true
+  dimensions:
+    service: memcached
+  exact_match: false
+  name: memcached
+  search_string:
+  - memcached
+
+# iscsid
+- built_by:
+  detailed: true
+  dimensions:
+    service: baremetal
+  exact_match: false
+  name: iscsid
+  search_string:
+  - iscsid
+
+# HAProxy
+- built_by: HAProxy
+  detailed: true
+  dimensions:
+    service: haproxy
+  exact_match: false
+  name: haproxy
+  search_string:
+  - haproxy
+- built_by: HAProxy
+  detailed: true
+  dimensions:
+    service: haproxy
+  exact_match: false
+  name: keepalived
+  search_string:
+  - keepalived
+
+  
+# Non-OpenStack
+
+# Infiniband Subnet Manager
+- built_by:
+  detailed: true
+  dimensions:
+    component: opensm
+  exact_match: false
+  name: opensm
+  search_string:
+  - opensm

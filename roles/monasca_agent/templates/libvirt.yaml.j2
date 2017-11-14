@@ -1,0 +1,27 @@
+init_config:
+    admin_password: {{ monasca_agent_admin_password }}
+    admin_tenant_name: {{ monasca_agent_admin_tenant_id }}
+    admin_user: {{ monasca_agent_admin_user }}
+    identity_uri: {{ monasca_agent_libvirt_keystone }}
+    region_name: {{ monasca_agent_region }}
+    cache_dir: /dev/shm
+    nova_refresh: 14400
+    metadata:
+    - scale_group
+    - vm_name
+    - tenant_name
+    customer_metadata:
+    - scale_group
+    - vm_name
+    vm_probation: 300
+    alive_only: false
+    network_use_bits: false
+    vm_cpu_check_enable: true
+    vm_disks_check_enable: true
+    vm_network_check_enable: true
+    vm_ping_check_enable: true
+    vm_extended_disks_check_enable: true
+    vm_disks_check_enable: true
+    vm_extended_disks_check_enable: true
+instances:
+    - {}

@@ -1,0 +1,11 @@
+[Unit]
+Description=Monasca Agent
+
+[Service]
+Type=simple
+User=root
+Group=root
+Restart=on-failure
+ExecStart={{ monasca_agent_venv }}/bin/supervisord -c /etc/monasca/agent/supervisor.conf -n
+
+[Install]

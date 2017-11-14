@@ -1,0 +1,128 @@
+#
+# Copyright StackHPC, 2016
+#
+---
+
+- name: Check if Monasca agent service exists
+  stat: path=/etc/systemd/system/monasca-agent.service
+  register: service_status
+
+- name: Stop monasca-agent if it's already installed
+  service:
+    name: monasca-agent
+    state: stopped
+  when: service_status.stat.exists
+
+# Covers both yum and zypper, the packages names are the same in that case
+- name: install packages
+  package:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - 'git'
+    - 'python-pip'
+    - 'gcc'
+    - 'python-devel'
+    - 'python-virtualenv'
+    - 'libxml2-devel'
+    - 'libxslt-devel'
+
+- name: create virtualenv
+  shell: 'virtualenv {{ monasca_agent_venv }}'
+
+- name: upgrade pip
+  shell: '{{ monasca_agent_venv }}/bin/pip install --upgrade pip'
+
+- name: upgrade setuptools
+  shell: '{{ monasca_agent_venv }}/bin/pip install --upgrade setuptools'
+
+- name: install monasca-agent into virtualenv
+  pip:
+    name: 'git+{{ monasca_agent_git_repo }}@{{ monasca_agent_git_rev }}#egg=monasca-agent'
+    editable: no
+    virtualenv: '{{ monasca_agent_venv }}'
+    virtualenv_site_packages: no
+  register: agent
+
+- name: agent systemd service file
+  template:
+    src: 'monasca-agent.service.j2'
+    dest: '/etc/systemd/system/monasca-agent.service'
+    owner: root
+    group: root
+    mode: "u=rw,g=r"
+  notify:
+  - reload units
+  - restart agent
+
+- name: create directory for config files
+  file:
+    state: directory
+    path: '/etc/monasca/agent/conf.d'
+    owner: root
+    group: root
+    mode: 0755
+
+- name: create directory for log files
+  file:
+    state: directory
+    path: '/var/log/monasca/agent'
+    owner: root
+    group: root
+    mode: 0750
+    
+- name: agent configuration file
+  template:
+    src: 'agent.yaml.j2'
+    dest: '/etc/monasca/agent/agent.yaml'
+    owner: root
+    group: root
+    mode: "u=rw,g=r"
+  notify: restart agent
+
+- name: supervisord configuration file
+  template:
+    src: 'supervisor.conf.j2'
+    dest: '/etc/monasca/agent/supervisor.conf'
+    owner: root
+    group: root
+    mode: "u=rw,g=r"
+  notify: restart agent
+  
+- name: manual configuration files for base plugins
+  template:
+    src: '{{ item.key }}.yaml.j2'
+    dest: '/etc/monasca/agent/conf.d/{{ item.key }}.yaml'
+    owner: root
+    group: root
+    mode: "u=rw,g=r"
+  with_dict: '{{ monasca_agent_plugins_enable }}'
+  when: '{{ item.value|bool }}'
+  notify: restart agent
+
+- import_playbook: plugins.yml
+
+# Additional python deps for docker monitoring
+# TODO - should look at installing docker instead of docker-py
+- name: install docker-py into virtualenv
+  pip:
+    name: docker-py
+    virtualenv: '{{ monasca_agent_venv }}'
+    virtualenv_site_packages: no
+  when: '{{ monasca_agent_enable_docker|default(False)|bool }}'
+  
+- name: manual configuration file for docker plugin
+  template:
+    src: docker.yaml.j2
+    dest: /etc/monasca/agent/conf.d/docker.yaml
+    owner: root
+    group: root
+    mode: "u=rw,g=r"
+  when: '{{ monasca_agent_enable_docker|default(False)|bool }}'
+  notify: restart agent
+  
+- name: ensure monasca-agent started and enabled
+  service:
+    name: monasca-agent
+    enabled: yes
+    state: started

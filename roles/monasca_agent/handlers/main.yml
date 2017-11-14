@@ -1,0 +1,11 @@
+#
+# Copyright StackHPC, 2016
+#
+---
+- name: restart agent
+  service:
+    name: monasca-agent
+    state: restarted
+
+- name: reload units
+  command: systemctl daemon-reload

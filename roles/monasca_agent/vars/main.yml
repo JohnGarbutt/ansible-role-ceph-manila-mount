@@ -1,0 +1,26 @@
+#
+# Copyright StackHPC, 2016
+#
+---
+monasca_agent_git_repo: https://github.com/openstack/monasca-agent
+monasca_agent_git_rev: stable/pike
+
+monasca_agent_venv: /opt/monasca-agent
+monasca_agent_plugins_enable:
+  cpu: True
+  disk: True
+  load: True
+  memory: True
+  network: True
+  ntp: True
+  docker: True
+  # More for OpenStack control plane
+  libvirt: False
+  ovs: False
+  postfix: False
+  http_check: False
+  process: '{{ monasca_agent_enable_process|default(False) }}'
+  rabbitmq: '{{ monasca_agent_enable_rabbitmq|default(False) }}'
+  ceph: '{{ monasca_agent_enable_ceph|default(False) }}'
+
+monasca_agent_enable_docker: True
