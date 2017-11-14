@@ -29,6 +29,7 @@
 
 - name: create virtualenv
   shell: 'virtualenv {{ monasca_agent_venv }}'
+  creates: '{{ monasca_agent_venv }}'
 
 - name: upgrade pip
   shell: '{{ monasca_agent_venv }}/bin/pip install --upgrade pip'
