@@ -4,6 +4,6 @@ clouds:
     auth:
       auth_url: {{ keystone_user_os_auth_url }}
       project_name: {{ keystone_user_os_project_name }}
-      username: p3-monitor
+      username: {{ keystone_user_os_username }}
       password: {{ keystone_user_os_password }}
     region: {{ keystone_user_os_region}}

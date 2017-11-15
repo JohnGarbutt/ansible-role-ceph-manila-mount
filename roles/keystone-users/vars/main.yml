@@ -3,7 +3,8 @@ keystone_user_homedir: /home/openstack
 keystone_user_groups: hadoop
 
 keystone_user_os_project_name: p3
-keystone_user_config_name: "{{ monasca_agent_user }}"
+keystone_user_config_name: openstack
+keystone_user_os_username: "{{ monasca_agent_user }}"
 keystone_user_os_auth_url: "{{ monasca_agent_keystone }}"
 keystone_user_os_password: "{{ monasca_agent_password }}"
 keystone_user_os_region: RegionOne
