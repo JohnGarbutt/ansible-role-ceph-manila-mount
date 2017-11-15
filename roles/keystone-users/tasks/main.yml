@@ -75,7 +75,8 @@
       cd ..
       make
       cp src/pam_python.so /usr/lib64/security/pam_python.so
-  creates: /usr/lib64/security/pam_python.so
+  args:
+    creates: /usr/lib64/security/pam_python.so
 
 - name: Install keystone-auth pam
   get_url:
