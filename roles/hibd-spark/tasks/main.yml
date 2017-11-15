@@ -1,5 +1,5 @@
 ---
-- name: Allow access to centos user
+- name: Allow access to centos user for admin
   lineinfile:
     path: /home/centos/.ssh/authorized_keys
     line: "{{ item }}"
@@ -8,7 +8,7 @@
     mode: 0600
   with_items: "{{ hibd_spark_allowed_ssh_keys_admin }}"
 
-- name: Allow access to centos user
+- name: Allow access to hadoop user to submitting jobs
   lineinfile:
     path: /home/hadoop/.ssh/authorized_keys
     line: "{{ item }}"
