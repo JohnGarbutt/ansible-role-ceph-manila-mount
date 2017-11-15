@@ -35,13 +35,24 @@
     groups: "{{ keystone_user_groups }}"
   with_items: "{{ keystone_users_allowed }}"
 
-- name: Ensure that Keystone user auth packages are installed
-  yum:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - pam-python
-    - pam-keystone
+#- name: Ensure that Keystone user auth packages are installed
+#  yum:
+#    name: "{{ item }}"
+#    state: present
+#  with_items:
+#    - pam-python
+#    - pam-keystone
+
+- name: Install python-pam and other keystone-auth dependencies
+  pip:
+    name: python-pam
+    version: 1.8.2
+
+- name: Install keystone-auth pam
+  get_url:
+    url: https://raw.githubusercontent.com/stackhpc/pam-keystone/ef863a13592a7e7f87b2fc48e1d86187155ce6a5/keystone-auth.py
+    dest: /usr/lib64/security/
+    mode: 0555
 
 - name: Update PAM auth configuration
   lineinfile:
@@ -54,7 +65,7 @@
     - /etc/pam.d/system-auth-ac
     - /etc/pam.d/password-auth-ac
 
-- name: Enable PasswordAuthentication in SSH config 
+- name: Enable PasswordAuthentication in SSH config
   lineinfile:
     path: /etc/ssh/sshd_config
     create: no
