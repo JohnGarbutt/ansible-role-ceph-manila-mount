@@ -1,0 +1,2 @@
+type=AVC msg=audit(1510763526.538:63335): avc:  denied  { name_connect } for  pid=6535 comm="sshd" dest=11211 scontext=system_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=system_u:object_r:memcache_port_t:s0 tclass=tcp_socket
+type=AVC msg=audit(1510763526.539:63336): avc:  denied  { name_connect } for  pid=6535 comm="sshd" dest=5000 scontext=system_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=system_u:object_r:commplex_main_port_t:s0 tclass=tcp_socket
