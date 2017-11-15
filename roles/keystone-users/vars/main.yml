@@ -1,13 +1,16 @@
 ---
+# Things you should set for each enviroment:
+#
+# keystone_user_os_auth_url: http://localhost:5000
+# keystone_user_os_project_name: project
+# keystone_user_os_username: username
+# keystone_user_os_password: password
+# keystone_user_os_region: MyRegion
+
 keystone_user_homedir: /home/openstack
 keystone_user_groups: hadoop
 
-keystone_user_os_project_name: p3
 keystone_user_config_name: openstack
-keystone_user_os_username: "{{ monasca_agent_user }}"
-keystone_user_os_auth_url: "{{ monasca_agent_keystone }}"
-keystone_user_os_password: "{{ monasca_agent_password }}"
-keystone_user_os_region: RegionOne
 
 keystone_users_allowed:
   - name: "Chris Broekema"
