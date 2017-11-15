@@ -14,6 +14,13 @@
     group: root
     mode: 0644
 
+- name: Ensure homedir exists
+  file:
+    dest: "{{ keystone_user_homedir }}"
+    owner: root
+    group: root
+    state: directory
+
 - name: Create user for each allowed Keystone user
   user:
     state: present
