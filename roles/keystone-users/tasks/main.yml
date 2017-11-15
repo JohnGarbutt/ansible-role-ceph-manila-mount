@@ -1,4 +1,13 @@
 ---
+- name: Get ssh keys
+  os_keypairs:
+    all: True
+  register: userkeys
+
+- debug:
+    msg: "{{ item }}"
+  with_items: "{{ userkeys }}"
+
 - name: Create OpenStack config dir
   file:
     dest: /etc/openstack
