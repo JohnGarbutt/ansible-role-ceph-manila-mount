@@ -1,4 +1,8 @@
 ---
+- name: Install os_client_config for the os_keypairs library
+  pip:
+    name: os_client_config
+
 - name: Get ssh keys
   os_keypairs:
     all: True
