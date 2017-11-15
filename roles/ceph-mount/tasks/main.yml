@@ -38,7 +38,7 @@
 - name: Add user keyring
   template:
     src: keyring.j2
-    dest: "{{ ceph_mount_conf_path }}/root/{{ ceph_mount_ceph_access_user }}.keyring"
+    dest: "{{ ceph_mount_conf_path }}/{{ ceph_mount_ceph_access_user }}.keyring"
     owner: root
     group: root
     mode: 0600
