@@ -68,7 +68,9 @@
 
 - name: Build and Install python-pam
   shell: |
-      python src/setup.py install
+      cd src
+      python setup.py install
+      cd ..
       make
       cp src/pam_python.so /usr/lib64/security/pam_python.so
   args:
