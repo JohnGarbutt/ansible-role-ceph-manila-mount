@@ -6,6 +6,12 @@
 # ceph_mount_ceph_access_key: ABCDuPFZ7wNLExAAuWmBG7cvpbwD/4/XU/sU8g==
 # ceph_mount_ceph_share_id: 2c6b0b4a-5fe5-48ea-a67c-90dd77a0b2c0
 
+ceph_mount_user: hadoop
+ceph_mount_group: hadoop
+ceph_mount_path: "/home/{{ ceph_mount_user }}/ceph"
+ceph_mount_repo_base: http://download.ceph.com/rpm-jewel/el7
+ceph_mount_conf_path: /etc/ceph
+
 ceph_mount_ceph_mon_hostlist: "{{ ceph_mount_ceph_mon_host }}:6789"
 ceph_mount_ceph_mountpoint: "/volumes/_nogroup/{{ ceph_mount_ceph_share_id}}"
 

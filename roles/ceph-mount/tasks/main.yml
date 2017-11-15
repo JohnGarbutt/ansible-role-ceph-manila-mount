@@ -3,7 +3,7 @@
   yum_repository:
     name: ceph-jewl-noarch
     description: Ceph Jewl Repo
-    baseurl: http://download.ceph.com/rpm-jewel/el7/noarch/
+    baseurl: "{{ ceph_mount_repo_base }}/noarch/"
     gpgkey: https://git.ceph.com/?p=ceph.git;a=blob_plain;f=keys/release.asc
   when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'"
 
@@ -11,36 +11,62 @@
   yum_repository:
     name: ceph-jewl-arch
     description: Ceph Jewl Repo
-    baseurl: http://download.ceph.com/rpm-jewel/el7/$basearch/
+    baseurl: "{{ ceph_mount_repo_base }}/$basearch/"
     gpgkey: https://git.ceph.com/?p=ceph.git;a=blob_plain;f=keys/release.asc
   when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'"
 
-- name: Install epel
-  yum: name=epel-release
-
 - name: Install ceph packages for mount and unmount
-  yum: name=ceph-common,ceph-fuse,fuse
+  yum: name=epel-release,ceph-common,ceph-fuse,fuse
   when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'"
 
+- name: Ensure ceph conf directory
+  file:
+    path: "{{ ceph_mount_conf_path }}"
+    state: directory
+    mode: 0700
+    owner: root
+    group: root
+
 - name: Configure ceph.conf
-  template: src=ceph.conf dest=/root/ceph.conf
+  template:
+    src: ceph.conf
+    dest: "{{ ceph_mount_conf_path }}/ceph.conf"
+    owner: root
+    group: root
+    mode: 0600
 
 - name: Add user keyring
-  template: src=keyring.j2 dest="/root/{{ ceph_mount_ceph_access_user }}.keyring"
+  template:
+    src: keyring.j2
+    dest: "{{ ceph_mount_conf_path }}/root/{{ ceph_mount_ceph_access_user }}.keyring"
+    owner: root
+    group: root
+    mode: 0600
 
 - name: Ensure mount directory exists
   file:
-    path: /root/ceph_mnt
+    path: "{{ ceph_mount_path }}"
     state: directory
+    owner: "{{ ceph_mount_user }}"
+    group: "{{ ceph_mount_group }}"
     mode: 0755
 
 - name: Unmount the CephFS filesystem
-  command: "fusermount -u /root/ceph_mnt"
+  command: "fusermount -u {{ ceph_mount_path }}"
   when: ceph_mount_do_unmount
   ignore_errors: "{{ ceph_mount_do_mount }}"
   tags: unmount
-  
+
 - name: Mount the CephFS filesystem
-  command: "ceph-fuse /root/ceph_mnt --id={{ ceph_mount_ceph_access_user }} --conf=/root/ceph.conf --keyring=/root/{{ ceph_mount_ceph_access_user }}.keyring --client-mountpoint={{ ceph_mount_ceph_mountpoint}}"
+  command: "ceph-fuse {{ ceph_mount_path }} --id={{ ceph_mount_ceph_access_user }} --conf={{ ceph_mount_conf_path}}/ceph.conf --keyring={{ ceph_mount_conf_path }}/{{ ceph_mount_ceph_access_user }}.keyring --client-mountpoint={{ ceph_mount_ceph_mountpoint }}"
   when: ceph_mount_do_mount
   tags: mount
+
+- name: Ensure user can access mount
+  file:
+    path: "{{ ceph_mount_path }}"
+    state: directory
+    owner: "{{ ceph_mount_user }}"
+    group: "{{ ceph_mount_group }}"
+    mode: 0755
+    recurse: yes
