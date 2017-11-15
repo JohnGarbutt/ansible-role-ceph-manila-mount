@@ -58,11 +58,11 @@
 - name: Download pam-python
   get_url:
     url: https://downloads.sourceforge.net/project/pam-python/pam-python-1.0.6-1/pam-python-1.0.6.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fpam-python%2Ffiles%2Fpam-python-1.0.6-1%2F&ts=1510755052&use_mirror=netcologne
-    dest: /root/pam-python/pam-python-1.0.6.tar.gz
+    dest: /root/pam-python-1.0.6.tar.gz
 
 - name: Extract pam-python
   unarchive:
-    src: /root/pam-python/pam-python-1.0.6.tar.gz
+    src: /root/pam-python-1.0.6.tar.gz
     dest: /root/
     remote_src: yes
 
