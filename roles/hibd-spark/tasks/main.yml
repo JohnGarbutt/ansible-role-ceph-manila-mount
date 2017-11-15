@@ -34,7 +34,16 @@
 
 - name: Install python3
   package:
-    name: python34-pip
+    name: python34-pip,python34-virtualenv
+
+- name: Create python3 virtualenv
+  shell: 'su {{ hibd_spark_user }} virtualenv-3 {{ hibd_spark_py3_venv }}'
+
+- name: Upgrade pip
+  shell: 'su {{ hibd_spark_user }} {{ hibd_spark_py3_venv }}/bin/pip install --upgrade pip'
+
+- name: Upgrade setuptools
+  shell: 'su {{ hibd_spark_user }} {{ hibd_spark_py3_venv }}/bin/pip install --upgrade setuptools'
 
 - name: Stop all spark processes
   command: "su hadoop {{ hibd_spark_home }}/sbin/stop-all.sh"
