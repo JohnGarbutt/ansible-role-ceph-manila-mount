@@ -68,14 +68,11 @@
 
 - name: Build and Install python-pam
   shell: |
-      cd /root/pam-python/pam-python-1.0.6
-      make
-      cd src
-      python setup.py install
-      cd ..
+      python src/setup.py install
       make
       cp src/pam_python.so /usr/lib64/security/pam_python.so
   args:
+    chdir: /root/pam-python-1.0.6
     creates: /usr/lib64/security/pam_python.so
 
 - name: Install keystone-auth pam
