@@ -6,7 +6,16 @@
     owner: centos
     group: centos
     mode: 0600
-  with_items: "{{ hibd_spark_allowed_ssh_keys }}"
+  with_items: "{{ hibd_spark_allowed_ssh_keys_admin }}"
+
+- name: Allow access to centos user
+  lineinfile:
+    path: /home/hadoop/.ssh/authorized_keys
+    line: "{{ item }}"
+    owner: hadoop
+    group: hadoop
+    mode: 0600
+  with_items: "{{ hibd_spark_allowed_ssh_keys_user }}"
 
 - name: Add slaves config
   template:
