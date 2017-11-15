@@ -83,6 +83,19 @@
     dest: /usr/lib64/security/
     mode: 0555
 
+- name: Get selinux policy violation capture
+  copy:
+    src: pam-python-selinux-capture
+    dest: /root/pam-python-1.0.6/pam-python-selinux-capture
+
+- name: Generate and install se-linux module
+  shell: |
+      cat pam-python-selinux-capture | audit2allow -M keystone-pam
+      semodule -i keystone-pam.pp
+  args:
+    chdir: /root/pam-python-1.0.6
+    creates: /root/pam-python-1.0.6/keystone-pam.pp
+
 - name: Update PAM auth configuration
   lineinfile:
     create: no
