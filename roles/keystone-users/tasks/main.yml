@@ -35,13 +35,12 @@
     groups: "{{ keystone_user_groups }}"
   with_items: "{{ keystone_users_allowed }}"
 
-#- name: Ensure that Keystone user auth packages are installed
-#  yum:
-#    name: "{{ item }}"
-#    state: present
-#  with_items:
-#    - pam-python
-#    - pam-keystone
+# TODO - need for spark, not very general
+- name: Allow access to group user home dir
+  file:
+    dest: "/home/{{ keystone_user_groups }}"
+    state: directory
+    mode: 0750
 
 - name: python-pam dependencies
   yum:
