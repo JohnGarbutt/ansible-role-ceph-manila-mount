@@ -1,0 +1,48 @@
+---
+keystone_user_homedir: /home/openstack
+keystone_user_groups: hadoop
+
+# TODO...
+keystone_user_os_project_name: p3
+keystone_user_config_name: "{{ monasca_agent_user }}"
+keystone_user_os_auth_url: "{{ monasca_agent_keystone }}"
+keystone_user_os_password: "{{ monasca_agent_password }}"
+keystone_user_os_region: RegionOne
+
+keystone_users_allowed:
+  - name: "Chris Broekema"
+    user: chris
+    uid: 2001
+  - name: "Paul Browne"
+    user: paul
+    uid: 2002
+  - name: "Mark Goddard"
+    user: mark
+    uid: 2003
+  - name: "Vlad Stolyarov"
+    user: vlad
+    uid: 2004
+  - name: "John Taylor"
+    user: john
+    uid: 2005
+  - name: "Stig Telfer"
+    user: stig
+    uid: 2006
+  - name: "Ben Mort"
+    user: ben
+    uid: 2007
+  - name: "Fred Dulwich"
+    user: fred
+    uid: 2009
+  - name: "Tim Cornwell"
+    user: tim
+    uid: 2014
+  - name: "Piers Harding"
+    user: piers
+    uid: 2015
+  - name: "Doug Szumski"
+    user: doug
+    uid: 2019
+  - name: "John Garbutt"
+    user: johng
+    uid: 2020

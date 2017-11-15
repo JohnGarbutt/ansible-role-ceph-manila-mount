@@ -3,6 +3,7 @@
   become: yes
 
   roles:
+    - keystone-users
     - ceph-mount
     # TODO - glusterfs-mount
     - monasca_agent

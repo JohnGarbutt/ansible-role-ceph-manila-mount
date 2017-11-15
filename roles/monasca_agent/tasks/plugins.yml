@@ -1,0 +1,81 @@
+#
+# Copyright StackHPC, 2016
+#
+---
+# Additional python deps for MySQL monitoring
+- name: install pymysql into virtualenv
+  pip:
+    name: pymysql
+    virtualenv: '{{ monasca_agent_venv }}'
+    virtualenv_site_packages: no
+  when: '{{ monasca_agent_mysql_password is defined }}'
+
+# Additional python deps for OVS monitoring
+  
+- name: install python-neutronclient into virtualenv
+  pip:
+    name: python-neutronclient
+    virtualenv: '{{ monasca_agent_venv }}'
+    virtualenv_site_packages: no
+  when: '{{ monasca_agent_enable_ovs|default(False)|bool }}'
+  
+# Additional python deps for libvirt: python-novaclient libvirt-python
+  
+- name: install python-novaclient into virtualenv
+  pip:
+    name: python-novaclient
+    virtualenv: '{{ monasca_agent_venv }}'
+    virtualenv_site_packages: no
+  when: '{{ monasca_agent_enable_libvirt|default(False)|bool }}'
+
+# Because libvirt python module requires libvirt-devel, which is not available
+# from yum, we copy the libvirt system wide package. This is horrible yes.
+
+- name: copy libvirt python module from system into virtualenv
+  copy:
+    src: '/usr/lib64/python2.7/site-packages/{{ item }}'
+    dest: '{{ monasca_agent_venv }}/lib64/python2.7/site-packages/{{ item }}'
+  with_items:
+  - libvirt_lxc.py
+  - libvirt_lxc.pyo
+  - libvirtmod_lxc.so
+  - libvirtmod_qemu.so
+  - libvirtmod.so
+  - libvirt.py
+  - libvirt.pyo
+  - libvirt_qemu.py
+  - libvirt_qemu.pyo
+  when: '{{ monasca_agent_enable_libvirt|default(False)|bool }}'
+  
+- name: run monasca-setup for mysql
+  command: >
+    {{ monasca_agent_venv }}/bin/monasca-setup
+    --skip_enable
+    --detection_plugins mysql
+    --detection_args
+    "user=root
+     password={{ monasca_agent_mysql_password }}
+     host=localhost
+     socket=/var/lib/mysql/mysql.sock"
+  when: (agent|changed or monasca_agent_force_setup|bool) and monasca_agent_mysql_password is defined
+  notify: restart agent
+  
+- name: manual configuration file for libvirt plugin
+  template:
+    src: libvirt.yaml.j2
+    dest: /etc/monasca/agent/conf.d/libvirt.yaml
+    owner: root
+    group: root
+    mode: "u=rw,g=r"
+  when: '{{ monasca_agent_enable_libvirt|default(False)|bool }}'
+  notify: restart agent
+
+- name: manual configuration file for ovs plugin
+  template:
+    src: ovs.yaml.j2
+    dest: /etc/monasca/agent/conf.d/ovs.yaml
+    owner: root
+    group: root
+    mode: "u=rw,g=r"
+  when: '{{ monasca_agent_enable_ovs|default(False)|bool }}'
+  notify: restart agent

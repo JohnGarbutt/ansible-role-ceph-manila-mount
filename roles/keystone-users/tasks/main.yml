@@ -1,0 +1,59 @@
+---
+- name: Create OpenStack config dir
+  file:
+    dest: /etc/openstack
+    owner: root
+    group: root
+    state: directory
+
+- name: Write OpenStack cloud config
+  template:
+    src: clouds.yaml.j2
+    dest: /etc/openstack/clouds.yaml
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Create user for each allowed Keystone user
+  user:
+    state: present
+    system: no
+    name: "{{ item.user }}"
+    uid: "{{ item.uid }}"
+    comment: "{{ item.name }}"
+    createhome: yes
+    home: "{{ keystone_user_homedir }}/{{ item.user }}"
+    generate_ssh_key: no
+    ssh_key_comment: "{{ item.name }}"
+    groups: "{{ keystone_user_groups }}"
+  with_items: "{{ keystone_users_allowed }}"
+
+- name: Ensure that Keystone user auth packages are installed
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - pam-python
+    - pam-keystone
+
+- name: Update PAM auth configuration
+  lineinfile:
+    create: no
+    state: present
+    insertbefore: "auth *sufficient *pam_unix.*"
+    line: "auth        sufficient    pam_python.so /usr/lib64/security/keystone-auth.py {{ keystone_user_config_name }}"
+    path: "{{ item }}"
+  with_items:
+    - /etc/pam.d/system-auth-ac
+    - /etc/pam.d/password-auth-ac
+
+- name: Enable PasswordAuthentication in SSH config 
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    create: no
+    state: present
+    insertafter: "^#PasswordAuthentication.*"
+    regexp: "^PasswordAuthentication .*"
+    line: "PasswordAuthentication yes"
+  notify:
+    - Restart SSH
