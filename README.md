@@ -8,6 +8,8 @@ including:
 * Adding access (currently via ssh-keys in centos user)
 * Adding Prometheus, Grafana, cAduditor for monitoring
 * Running OHB and spark-bench benchmarks
+* Allows certain users to log into via Nova keypair or Keystone password
+* Allows certain users passwordless sudo access (via the wheel group)
 
 If you need to install ansible, you could do this:
 
@@ -16,13 +18,27 @@ If you need to install ansible, you could do this:
 	pip install -U pip
 	pip install ansible
 
-You can run all the playbooks, you can do:
+To access the vault protected passwords in the groupvars, we need to give
+ansible access to the vault password, such as telling it where your password
+file lives:
+
+    ANSIBLE_VAULT_PASSWORD_FILE=.vaultpass
+
+To access OpenStack APIs for getting ssh keys we need admin credentials:
+
+    source openrc
+
+Or if you have a clouds.yaml file configured:
+
+    export OS_CLOUD=alaska
+
+To run all the playbooks, you can do:
 
 	ansible-playbook master.yml
 
 If you just want to run the benchmarks you can do this:
 
-    ansible-playbook ansible-playbook playbooks/groups/bench.yml
+    ansible-playbook playbooks/groups/bench.yml
 
 Please let us know how it goes. Pull requests are very welcome.
 
