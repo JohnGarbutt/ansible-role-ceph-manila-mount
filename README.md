@@ -3,7 +3,7 @@
 This repository is being used to automate the customization of a spark cluster
 including:
 
-* Adds OpenStack clouds.yaml file (role: openstack-conf)
+* Adds OpenStack clouds.yaml file (role: `openstack-conf`)
 * Adds specific keystone users, password from keystone-pam, ssh keys from Nova
   (role: `keystone-users`)
 * Add CephFS mount (using fuse), pulls connection info from Manila
