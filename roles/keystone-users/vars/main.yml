@@ -1,16 +1,11 @@
 ---
 # Things you should set for each enviroment:
 #
-# keystone_user_os_auth_url: http://localhost:5000
-# keystone_user_os_project_name: project
-# keystone_user_os_username: username
-# keystone_user_os_password: password
-# keystone_user_os_region: MyRegion
+# keystone_user_os_config_name: openstack
+# keystone_user_os_project_name: project1
 
 keystone_user_homedir: /home/openstack
 keystone_user_groups: hadoop
-
-keystone_user_config_name: openstack
 
 keystone_users_allowed:
   - name: "Chris Broekema"
