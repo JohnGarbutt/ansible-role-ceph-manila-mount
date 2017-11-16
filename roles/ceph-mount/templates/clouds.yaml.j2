@@ -1,0 +1,9 @@
+---
+clouds:
+  {{ keystone_user_config_name }}:
+    auth:
+      auth_url: "http://10.60.253.128:5000"
+      project_name: {{ keystone_user_os_project_name }}
+      username: {{ keystone_user_os_username }}
+      password: {{ keystone_user_os_password }}
+    region: {{ keystone_user_os_region}}
