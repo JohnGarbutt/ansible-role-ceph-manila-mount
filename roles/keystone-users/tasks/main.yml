@@ -139,7 +139,7 @@
   with_items: "{{ keystone_users_allowed }}"
 
 - name: Add authorized_keys
-  copy:
+  blockinfile:
     dest: "{{ keystone_user_homedir }}/{{ item.user }}/.ssh/authorized_keys"
     content: "{{ ssh_users.authorized_keys[item.user] }}"
     owner: "{{ item.user }}"
