@@ -1,7 +1,7 @@
 # ansible-role-ceph-manila-mount
 
-This repository is being used to automate the customization of a spark cluster
-including:
+This repository is being used to automate the customization of various clusters
+and includes roles for:
 
 * Adds OpenStack clouds.yaml file (role: `openstack-conf`)
 * Adds specific keystone users, password from keystone-pam, ssh keys from Nova

@@ -7,6 +7,6 @@
 [bench:children]
 master
 
-[alt-1:children]
+[alt-1-spark:children]
 master
 slave
