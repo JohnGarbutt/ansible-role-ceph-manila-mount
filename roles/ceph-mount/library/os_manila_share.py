@@ -102,12 +102,14 @@ def main():
 
     required_protocal = module.params['protocol']
     if share['protocol'] != required_protocal:
-        module.fail_json(msg="Share does not match requested protocol.")
+        module.fail_json(
+            msg="Protocol %s does not match requested." % share['protocol'])
 
     required_size = module.params['size']
     if share['size'] != required_size:
         # TODO if size doesn't match, we could expand the share
-        module.fail_json(msg="Share does not match requested size.")
+        module.fail_json(
+            msg="Size %s does not match requested." % share['size'])
 
     module.exit_json(changed=False, details=share)
 

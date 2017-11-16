@@ -23,7 +23,7 @@
   os_manila_share:
     name: "{{ ceph_mount_manila_share_name }}"
     user: "{{ ceph_mount_ceph_access_user }}"
-    protocol: CephFS
+    protocol: CEPHFS
   register: ceph_mount_manila_share
   environment:
       OS_CLOUD: "{{ ceph_mount_os_config_name }}"
