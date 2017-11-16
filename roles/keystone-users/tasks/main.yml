@@ -130,7 +130,7 @@
 
 - name: Ensure .ssh dir exists
   file:
-    path: "/home/{{ item.user }}/.ssh"
+    path: "{{ keystone_user_homedir }}/{{ item.user }}/.ssh"
     state: directory
     owner: "{{ item.user }}"
     group: "{{ item.user }}"
@@ -140,9 +140,8 @@
 
 - name: Add authorized_keys
   copy:
-    path: "/home/{{ item.user }}/.ssh/authorized_keys"
+    dest: "{{ keystone_user_homedir }}/{{ item.user }}/.ssh/authorized_keys"
     content: "{{ ssh_users.authorized_keys[item.user] }}"
-    state: file
     owner: "{{ item.user }}"
     group: "{{ item.user }}"
     mode: 0600
