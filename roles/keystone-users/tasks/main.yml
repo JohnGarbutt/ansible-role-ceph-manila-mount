@@ -147,3 +147,10 @@
     mode: 0600
   when: item.user in ssh_users.authorized_keys
   with_items: "{{ keystone_users_allowed }}"
+
+- name: Allow wheel group to have passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
