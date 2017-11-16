@@ -24,7 +24,7 @@ def get_users(identity_client, project_name):
     # TODO - check paging
     raw_assignments = assign_response["role_assignments"]
     users = [(a['user']['id'], a['user']['name']) for a in raw_assignments]
-    users = set(user_ids)
+    users = set(users)
     return [{'name':u[1], 'user_id':u[0]} for u in users]
 
 
