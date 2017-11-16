@@ -86,10 +86,20 @@
   ignore_errors: "{{ ceph_mount_do_mount }}"
   tags: unmount
 
-- name: Mount the CephFS filesystem
-  command: "ceph-fuse {{ ceph_mount_path }} --id={{ ceph_mount_ceph_access_user }} --conf={{ ceph_mount_conf_path}}/ceph.conf --keyring={{ ceph_mount_conf_path }}/{{ ceph_mount_ceph_access_user }}.keyring --client-mountpoint={{ ceph_mount_ceph_mountpoint }}"
-  when: ceph_mount_do_mount
-  tags: mount
+#- name: Mount the CephFS filesystem
+#  command: "ceph-fuse {{ ceph_mount_path }} --id={{ ceph_mount_ceph_access_user }} --conf={{ ceph_mount_conf_path}}/ceph.conf --keyring={{ ceph_mount_conf_path }}/{{ ceph_mount_ceph_access_user }}.keyring --client-mountpoint={{ ceph_mount_ceph_mountpoint }}"
+#  when: ceph_mount_do_mount
+#  tags: mount
+
+# Using _netdev as a filesystem option prevents the mount from blocking early boot
+# before networking is initialised
+- name: Mount the home directory from the Ceph cluster
+  mount:
+    path: "{{ ceph_mount_path }}"
+    src: "{{ ceph_mount_ceph_mountpoint }}"
+    fstype: fuse.ceph
+    state: mounted
+    opts: "_netdev,noatime,id={{ ceph_mount_ceph_access_user }},conf={{ ceph_mount_conf_path}}/ceph.conf,keyring={{ ceph_mount_conf_path }}/{{ ceph_mount_ceph_access_user }}.keyring"
 
 - name: Ensure user can access mount
   file:

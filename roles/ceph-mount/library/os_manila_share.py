@@ -36,16 +36,19 @@ def main():
 
     raw_share = raw_shares[0]
 
+    # TODO if size doesn't match, should expand the share
     share = {
         "id": raw_share['id'],
         "size" : raw_share['size'],
     }
+
     # TODO - some drivers have a preferred export.
     exports = raw_share['export_locations']
     if exports:
         share['export'] = exports[0]
 
     headers={"X-Openstack-Manila-Api-Version": "2.40"}
+    payload = {"access_list": None}
     raw_access = share_client.post(
             "/shares/%s/action" % share['id'],
             json=payload, headers=headers).json()['access_list']
