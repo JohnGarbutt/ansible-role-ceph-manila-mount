@@ -21,8 +21,10 @@ def get_share_client(module):
 
 
 def get_share_details(share_client, share_name):
+    headers={"X-Openstack-Manila-Api-Version": "2.6"}
     raw_shares = share_client.get(
-        "/shares/detail?name=%s" % "jmfg2-spark-test").json()['shares']
+        "/shares/detail?name=%s" % "jmfg2-spark-test",
+        headers=headers).json()['shares']
     if not raw_shares:
         # TODO - we could create the share, if given enough info
         raise Exception("Unable to find requested share.")
