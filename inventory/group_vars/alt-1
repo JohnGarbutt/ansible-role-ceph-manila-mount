@@ -27,7 +27,8 @@ openstack_conf_content: !vault |
       32366634383362616235636261313737623062616139663863663039356161343365373438643138
       6639
 
-keystone_user_os_config_name: alaska-pam
+keystone_user_os_config_name: alaska
+keystone_user_os_config_name_pam: alaska-pam
 keystone_user_os_project_name: p3
 
 monasca_app_name: johng-spark-rdma-test

@@ -85,7 +85,7 @@
     create: no
     state: present
     insertbefore: "auth *sufficient *pam_unix.*"
-    line: "auth        sufficient    pam_python.so /usr/lib64/security/keystone-auth.py {{ keystone_user_os_config_name }}"
+    line: "auth        sufficient    pam_python.so /usr/lib64/security/keystone-auth.py {{ keystone_user_os_config_name_pam }}"
     path: "{{ item }}"
   with_items:
     - /etc/pam.d/system-auth-ac

@@ -2,6 +2,7 @@
 # Things you should set for each enviroment:
 #
 # keystone_user_os_config_name: openstack
+# keystone_user_os_config_name_pam: openstack-pam
 # keystone_user_os_project_name: project1
 
 keystone_user_homedir: /home/openstack
