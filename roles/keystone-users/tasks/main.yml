@@ -141,7 +141,7 @@
 - name: Add authorized_keys
   blockinfile:
     dest: "{{ keystone_user_homedir }}/{{ item.user }}/.ssh/authorized_keys"
-    content: "{{ ssh_users.authorized_keys[item.user] }}"
+    block: "{{ ssh_users.authorized_keys[item.user] }}"
     owner: "{{ item.user }}"
     group: "{{ item.user }}"
     mode: 0600
