@@ -99,7 +99,7 @@
     src: "id={{ ceph_mount_ceph_access_user }},conf={{ ceph_mount_conf_path}}/ceph.conf,keyring={{ ceph_mount_conf_path }}/{{ ceph_mount_ceph_access_user }}.keyring,client-mountpoint={{ ceph_mount_ceph_mountpoint }}"
     fstype: fuse.ceph
     state: mounted
-    opts: "_netdev,noatime,id={{ ceph_mount_ceph_access_user }},conf={{ ceph_mount_conf_path}}/ceph.conf,keyring={{ ceph_mount_conf_path }}/{{ ceph_mount_ceph_access_user }}.keyring"
+    opts: "_netdev,noatime"
 
 - name: Ensure user can access mount
   file:
