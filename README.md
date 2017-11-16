@@ -6,8 +6,9 @@ including:
 * Adds OpenStack clouds.yaml file (role: openstack-conf)
 * Adds specific keystone users, password from keystone-pam, ssh keys from Nova
   (role: `keystone-users`)
-* Add CephFS mount (using fuse), pulls config from Manila
+* Add CephFS mount (using fuse), pulls connection info from Manila
   (role: `ceph-mount`)
+* TODO: add GlusterFS mount, using connection info from Manila
 * Adds Monasca agent (role: `monasca_agent`)
 * Installs Docker-ce (role: `docker`)
 * Adds cAdvisor and Prometheus Node exporter (role: `prometheus-docker-node`)
