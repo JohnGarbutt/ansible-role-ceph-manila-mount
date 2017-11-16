@@ -25,9 +25,6 @@
   environment:
       OS_CLOUD: "{{ keystone_user_config_name }}"
 
-- debug:
-    msg: "Got share info: {{ ceph_mount_manila_share.details }}"
-
 - name: Install Ceph Jewl noarch Repo
   yum_repository:
     name: ceph-jewl-noarch
@@ -79,17 +76,6 @@
     owner: "{{ ceph_mount_user }}"
     group: "{{ ceph_mount_group }}"
     mode: 0755
-
-- name: Unmount the CephFS filesystem
-  command: "fusermount -u {{ ceph_mount_path }}"
-  when: ceph_mount_do_unmount
-  ignore_errors: "{{ ceph_mount_do_mount }}"
-  tags: unmount
-
-#- name: Mount the CephFS filesystem
-#  command: "ceph-fuse {{ ceph_mount_path }} --id={{ ceph_mount_ceph_access_user }} --conf={{ ceph_mount_conf_path}}/ceph.conf --keyring={{ ceph_mount_conf_path }}/{{ ceph_mount_ceph_access_user }}.keyring --client-mountpoint={{ ceph_mount_ceph_mountpoint }}"
-#  when: ceph_mount_do_mount
-#  tags: mount
 
 # Using _netdev as a filesystem option prevents the mount from blocking early boot
 # before networking is initialised
