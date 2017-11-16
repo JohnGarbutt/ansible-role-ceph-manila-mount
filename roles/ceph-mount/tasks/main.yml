@@ -96,7 +96,7 @@
 - name: Mount the home directory from the Ceph cluster
   mount:
     path: "{{ ceph_mount_path }}"
-    src: "{{ ceph_mount_ceph_mountpoint }}"
+    src: "{{ ceph_mount_ceph_mountpoint }},id={{ ceph_mount_ceph_access_user }},conf={{ ceph_mount_conf_path}}/ceph.conf,keyring={{ ceph_mount_conf_path }}/{{ ceph_mount_ceph_access_user }}.keyring"
     fstype: fuse.ceph
     state: mounted
     opts: "_netdev,noatime,id={{ ceph_mount_ceph_access_user }},conf={{ ceph_mount_conf_path}}/ceph.conf,keyring={{ ceph_mount_conf_path }}/{{ ceph_mount_ceph_access_user }}.keyring"
