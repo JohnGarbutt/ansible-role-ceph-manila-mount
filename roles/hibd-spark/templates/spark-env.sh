@@ -1,5 +1,5 @@
 export SPARK_CONF_DIR=/opt/spark/conf
-export SPARK_MASTER_HOST={{ groups['master'][0] }}
+export SPARK_MASTER_HOST={{ groups['hibd-spark-master'][0] }}
 export SPARK_LOCAL_IP=`hostname -s`
 
 export SPARK_WORKER_MEMORY=96g

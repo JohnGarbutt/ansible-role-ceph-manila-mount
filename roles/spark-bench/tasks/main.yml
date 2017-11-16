@@ -40,7 +40,7 @@
 
 - name: Copy kmeans files to slave
   command: "su hadoop -c \"rsync -r /home/hadoop/kmeans-medium hadoop@{{ item }}:/home/hadoop/\""
-  with_items: "{{ groups['slave'] }}"
+  with_items: "{{ groups['bench-client'] }}"
 
 - name: Wait to help post test graphs
   pause:

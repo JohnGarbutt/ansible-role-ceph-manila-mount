@@ -15,7 +15,7 @@ scrape_configs:
 
     static_configs:
       - targets:
-{% for node in groups['master'] %}
+{% for node in groups['prometheus-server'] %}
         - '{{ node }}:9090'
 {% endfor %}
 
@@ -23,10 +23,7 @@ scrape_configs:
     scrape_interval: 15s
     static_configs:
       - targets:
-{% for node in groups['master'] %}
-        - '{{ node }}:9100'
-{% endfor %}
-{% for node in groups['slave'] %}
+{% for node in groups['all'] %}
         - '{{ node }}:9100'
 {% endfor %}
 
@@ -43,9 +40,6 @@ scrape_configs:
     scrape_interval: 15s
     static_configs:
       - targets:
-{% for node in groups['master'] %}
-        - '{{ node }}:9080'
-{% endfor %}
-{% for node in groups['slave'] %}
+{% for node in groups['all'] %}
         - '{{ node }}:9080'
 {% endfor %}

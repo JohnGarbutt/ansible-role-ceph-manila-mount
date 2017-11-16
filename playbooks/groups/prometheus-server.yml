@@ -1,7 +1,6 @@
 ---
-- hosts: master
+- hosts: prometheus-server
   become: yes
   
   roles:
     - prometheus-server
-    - hibd-spark

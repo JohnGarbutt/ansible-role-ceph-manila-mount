@@ -12,7 +12,6 @@ and includes roles for:
 * Adds Monasca agent (role: `monasca_agent`)
 * Installs Docker-ce (role: `docker`)
 * Adds cAdvisor and Prometheus Node exporter (role: `prometheus-docker-node`)
-* Adds cAdvisor and Prometheus Node exporter (role: `prometheus-docker-node`)
 * Configures Prometheus and Grafana (role: `prometheus-server`)
 * Configures spark to use a Python34 virtualenv, restarts Spark, adds some
   ssh keys to hadoop and centos users (role: `hibd-spark`)

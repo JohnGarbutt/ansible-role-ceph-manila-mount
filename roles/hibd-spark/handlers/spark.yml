@@ -1,8 +1,12 @@
+---
+
+# TODO move to using systemd unit or similar
+
 - name: Stop all spark processes
   command: "su hadoop {{ hibd_spark_home }}/sbin/stop-all.sh"
   ignore_errors: true
-  when: "'master' in group_names"
+  when: "'hibd-spark-master' in group_names"
 
 - name: Start all spark processes
   command: "su hadoop {{ hibd_spark_home }}/sbin/start-all.sh"
-  when: "'master' in group_names"
+  when: "'hibd-spark-master' in group_names"

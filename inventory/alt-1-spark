@@ -1,12 +1,25 @@
-[master]
+[spark-master]
 10.60.253.143
 
-[slave]
+[spark-slaves]
 10.60.253.146
 
-[bench:children]
-master
-
 [alt-1-spark:children]
-master
-slave
+spark-master
+spark-slaves
+
+[prometheus-server:children]
+spark-master
+
+[hibd-spark:children]
+spark-master
+spark-slaves
+
+[hibd-spark-master:children]
+spark-master
+
+[bench:children]
+spark-master
+
+[bench-client:children]
+spark-slaves

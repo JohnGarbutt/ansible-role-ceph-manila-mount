@@ -30,10 +30,10 @@
   command: ib_send_bw -d mlx5_0 -i 1 -F --report_gbits -D 10
   async: 30
   poll: 0  # Don't wait for it to finish
-  delegate_to: "{{ groups['slave'][0] }}"
+  delegate_to: "{{ groups['bench-client'][0] }}"
 
 - name: Run RDMA test on master
-  command: "ib_send_bw -d mlx5_0 -i 1 -F --report_gbits -D 10 {{ groups['slave'][0] }}"
+  command: "ib_send_bw -d mlx5_0 -i 1 -F --report_gbits -D 10 {{ groups['bench-client'][0] }}"
 
 - name: Wait to help post test graphs
   pause:
@@ -45,8 +45,8 @@
   poll: 0  # Don't wait for it to finish
 
 - name: Run RDMA test on slave
-  command: "ib_send_bw -d mlx5_0 -i 1 -F --report_gbits -D 10 {{ groups['master'][0]}}"
-  delegate_to: "{{ groups['slave'][0] }}"
+  command: "ib_send_bw -d mlx5_0 -i 1 -F --report_gbits -D 10 {{ ansible_host }}"
+  delegate_to: "{{ groups['bench-client'] }}"
 
 - name: Wait to help post test graphs
   pause:
