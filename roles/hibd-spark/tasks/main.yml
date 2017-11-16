@@ -21,16 +21,22 @@
   template:
     src: slaves
     dest: "{{ hibd_spark_home }}/conf/slaves"
+  notify:
+    - Restart Spark
 
 - name: Add spark-env
   template:
     src: spark-env.sh
     dest: "{{ hibd_spark_home }}/conf/spark-env.sh"
+  notify:
+    - Restart Spark
 
 - name: Add spark-defaults
   template:
     src: spark-defaults.conf
     dest: "{{ hibd_spark_home }}/conf/spark-defaults.conf"
+  notify:
+    - Restart Spark
 
 - name: Install python3
   package:
@@ -38,18 +44,15 @@
 
 - name: Create python3 virtualenv
   shell: 'su {{ hibd_spark_user }} -c "virtualenv-3 {{ hibd_spark_py3_venv }}"'
+  args:
+    creates: "{{ hibd_spark_py3_venv }}"
 
 - name: Upgrade pip
   shell: 'su {{ hibd_spark_user }} -c "{{ hibd_spark_py3_venv }}/bin/pip install --upgrade pip"'
+  args:
+    creates: "{{ hibd_spark_py3_venv }}"
 
 - name: Upgrade setuptools
   shell: 'su {{ hibd_spark_user }} -c "{{ hibd_spark_py3_venv }}/bin/pip install --upgrade setuptools"'
-
-- name: Stop all spark processes
-  command: "su hadoop {{ hibd_spark_home }}/sbin/stop-all.sh"
-  ignore_errors: true
-  when: "'master' in group_names"
-
-- name: Start all spark processes
-  command: "su hadoop {{ hibd_spark_home }}/sbin/start-all.sh"
-  when: "'master' in group_names"
+  args:
+    creates: "{{ hibd_spark_py3_venv }}"
