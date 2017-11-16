@@ -58,15 +58,15 @@ def get_share_details(share_client, share_name):
     return share
 
 
-def get_access_key(share_client, share, user):
+def get_access_key(share_client, share_id, user):
     headers={"X-Openstack-Manila-Api-Version": "2.40"}
     payload = {"access_list": None}
-    raw_access = share_client.post(
-            "/shares/%s/action" % share['id'],
+    raw_access_list = share_client.post(
+            "/shares/%s/action" % share_id,
             json=payload, headers=headers).json()['access_list']
 
     access_key = None
-    for access in raw_access:
+    for access in raw_access_list:
         if access['access_to'] == "spark":
             access_key = access['access_key']
             break
