@@ -55,7 +55,7 @@ def main():
     if split_len == 2:
         share['host'] = split_export[0]
     if split_len == 3:
-        share['host'] = "%:%" % (split_export[0], split_export[1])
+        share['host'] = "%s:%s" % (split_export[0], split_export[1])
 
     headers={"X-Openstack-Manila-Api-Version": "2.40"}
     payload = {"access_list": None}
