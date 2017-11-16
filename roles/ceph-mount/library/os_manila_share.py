@@ -38,7 +38,7 @@ def main():
 
     share = {
         "id": raw_share['id'],
-        "size" : raw_shares['size'],
+        "size" : raw_share['size'],
     }
     # TODO - some drivers have a preferred export.
     exports = raw_share['export_locations']
