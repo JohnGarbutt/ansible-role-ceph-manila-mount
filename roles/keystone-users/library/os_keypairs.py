@@ -54,12 +54,15 @@ def main():
         module.fail_json(msg="Please check your OpenStack credentials.")
 
     users = get_users(identity_client, module.params['project_name'])
-    for user in users:
-        user['keypairs'] = get_keypairs(compute_client, user['user_id'])
 
-    users_with_keys = [u for u in users if u['keypairs']]
-    if users:
-        module.exit_json(changed=True, users=users_with_keys)
+    authorized_keys = {}
+    for user in users:
+        keypairs = get_keypairs(compute_client, user['user_id'])
+        if keypairs:
+            authorized_keys[user['name']] = "\n".join(keypairs)
+
+    if authorized_keys:
+        module.exit_json(changed=True, authorized_keys=authorized_keys)
 
 if __name__ == '__main__':
     main()

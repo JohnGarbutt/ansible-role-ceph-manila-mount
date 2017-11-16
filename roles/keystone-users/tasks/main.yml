@@ -1,19 +1,4 @@
 ---
-- name: Install os_client_config for the os_keypairs library
-  pip:
-    name: os_client_config
-
-- name: Get ssh keys
-  os_keypairs:
-    project_name: "{{ keystone_user_os_project_name }}"
-  register: sshkeys
-  environment:
-      OS_CLOUD: "{{ keystone_user_config_name }}"
-
-- debug:
-    msg: "{{ item }}"
-  with_items: "{{ sshkeys.users }}"
-
 - name: Create OpenStack config dir
   file:
     dest: /etc/openstack
@@ -131,3 +116,20 @@
     line: "PasswordAuthentication yes"
   notify:
     - Restart SSH
+
+- name: Install os_client_config for the os_keypairs library
+  pip:
+    name: os_client_config
+
+- name: Get ssh keys
+  os_keypairs:
+    project_name: "{{ keystone_user_os_project_name }}"
+  register: ssh_users
+  environment:
+      OS_CLOUD: "{{ keystone_user_config_name }}"
+
+- debug:
+     msg: |
+        "{{ ssh_users.authorized_keys[item.name] }}"
+        "/home/{{ item.name] }}/.ssh/authorized_keys"
+  with_items: "{{ keystone_users_allowed }}"
