@@ -16,36 +16,48 @@ keystone_users_allowed:
   - name: "Chris Broekema"
     user: chris
     uid: 2001
+    groups:
   - name: "Paul Browne"
     user: paul
     uid: 2002
+    groups:
   - name: "Mark Goddard"
     user: mark
     uid: 2003
+    groups: wheel
   - name: "Vlad Stolyarov"
     user: vlad
     uid: 2004
+    groups:
   - name: "John Taylor"
     user: john
     uid: 2005
+    groups: wheel
   - name: "Stig Telfer"
     user: stig
     uid: 2006
+    groups: wheel
   - name: "Ben Mort"
     user: ben
     uid: 2007
+    groups:
   - name: "Fred Dulwich"
     user: fred
     uid: 2009
+    groups: wheel
   - name: "Tim Cornwell"
     user: tim
     uid: 2014
+    groups:
   - name: "Piers Harding"
     user: piers
     uid: 2015
+    groups:
   - name: "Doug Szumski"
     user: doug
     uid: 2019
+    groups: wheel
   - name: "John Garbutt"
     user: johng
     uid: 2020
+    groups: wheel

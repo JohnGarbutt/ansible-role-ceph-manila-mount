@@ -32,7 +32,7 @@
     home: "{{ keystone_user_homedir }}/{{ item.user }}"
     generate_ssh_key: no
     ssh_key_comment: "{{ item.name }}"
-    groups: "{{ keystone_user_groups }}"
+    groups: "{{ keystone_user_groups }},{{ item.groups }}"
   with_items: "{{ keystone_users_allowed }}"
 
 # TODO - need for spark, not very general
@@ -116,3 +116,34 @@
     line: "PasswordAuthentication yes"
   notify:
     - Restart SSH
+
+- name: Install os_client_config for the os_keypairs library
+  pip:
+    name: os_client_config
+
+- name: Get ssh keys
+  os_keypairs:
+    project_name: "{{ keystone_user_os_project_name }}"
+  register: ssh_users
+  environment:
+      OS_CLOUD: "{{ keystone_user_config_name }}"
+
+- name: Ensure .ssh dir exists
+  file:
+    path: "{{ keystone_user_homedir }}/{{ item.user }}/.ssh"
+    state: directory
+    owner: "{{ item.user }}"
+    group: "{{ item.user }}"
+    mode: 0700
+  when: item.user in ssh_users.authorized_keys
+  with_items: "{{ keystone_users_allowed }}"
+
+- name: Add authorized_keys
+  copy:
+    dest: "{{ keystone_user_homedir }}/{{ item.user }}/.ssh/authorized_keys"
+    content: "{{ ssh_users.authorized_keys[item.user] }}"
+    owner: "{{ item.user }}"
+    group: "{{ item.user }}"
+    mode: 0600
+  when: item.user in ssh_users.authorized_keys
+  with_items: "{{ keystone_users_allowed }}"
