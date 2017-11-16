@@ -18,7 +18,7 @@ def get_keypairs(compute_client, user_id):
     response = compute_client.get(
         "/os-keypairs?user_id=%s" % user_id, microversion="2.15").json()
     raw_keypairs = response['keypairs']
-    return [k['public_key'] for k in raw_keypairs]
+    return [k['public_key'] for k in raw_keypairs if 'public_key' in raw_keypairs]
 
 
 def main():
@@ -43,7 +43,8 @@ def main():
     for user in users:
         user['keypairs'] = get_keypairs(compute_client, user['user_id'])
 
-    module.exit_json(changed=True, users=users)
+    if users:
+        module.exit_json(changed=True, users=users)
 
 if __name__ == '__main__':
     main()
