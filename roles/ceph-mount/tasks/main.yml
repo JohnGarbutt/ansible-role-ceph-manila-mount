@@ -1,15 +1,4 @@
 ---
-- name: Get manila access info
-  os_manila_share:
-    name: jmfg2-spark-test
-    user: spark
-    type: cephfsnativetype
-    protocol: CephFS
-    size_gb: 500
-  register: ceph_mount_manila_share
-  environment:
-      OS_CLOUD: "{{ ceph_mount_os_config_name }}"
-
 - name: Install Ceph Jewl noarch Repo
   yum_repository:
     name: ceph-jewl-noarch
@@ -30,6 +19,21 @@
   yum: name=epel-release,ceph-common,ceph-fuse,fuse
   when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'"
 
+- name: Get manila access info
+  os_manila_share:
+    name: "{{ ceph_mount_manila_share_name }}"
+    user: "{{ ceph_mount_ceph_access_user }}"
+    protocol: CephFS
+  register: ceph_mount_manila_share
+  environment:
+      OS_CLOUD: "{{ ceph_mount_os_config_name }}"
+
+- name: Take config from manila
+  set_fact:
+    ceph_mount_ceph_mon_hostlist: "{{ ceph_mount_manila_share.details.host }}"
+    ceph_mount_ceph_access_key: "{{ ceph_mount_manila_share.details.access_key }}"
+    ceph_mount_ceph_mountpoint: "{{ ceph_mount_manila_share.details.path }}"
+
 - name: Ensure ceph conf directory
   file:
     path: "{{ ceph_mount_conf_path }}"
@@ -37,12 +41,6 @@
     mode: 0700
     owner: root
     group: root
-
-- name: Take config from manila
-  set_fact:
-    ceph_mount_ceph_mon_hostlist: "{{ ceph_mount_manila_share.details.host }}"
-    ceph_mount_ceph_access_key: "{{ ceph_mount_manila_share.details.access_key }}"
-    ceph_mount_ceph_mountpoint: "{{ ceph_mount_manila_share.details.path }}"
 
 - name: Configure ceph.conf using ceph_mount_ceph_mon_hostlist
   template:
@@ -66,7 +64,7 @@
     state: directory
     owner: "{{ ceph_mount_user }}"
     group: "{{ ceph_mount_group }}"
-    mode: 0755
+    mode: "{{ ceph_mount_mode }}"
 
 # Using _netdev as a filesystem option prevents the mount from blocking early boot
 # before networking is initialised
@@ -84,5 +82,4 @@
     state: directory
     owner: "{{ ceph_mount_user }}"
     group: "{{ ceph_mount_group }}"
-    mode: 0755
-    recurse: yes
+    mode: "{{ ceph_mount_mode }}"

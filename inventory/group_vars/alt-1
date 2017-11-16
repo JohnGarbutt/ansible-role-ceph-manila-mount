@@ -49,7 +49,8 @@ monasca_agent_password: !vault |
       6332323139663039620a306233653536643232346430623861616464613233353263333531336166
       6234
 
-ceph_mount_os_config_name: alaska-alt1
 ceph_mount_ceph_access_user: spark
+ceph_mount_manila_share_name: jmfg2-spark-test
+ceph_mount_os_config_name: alaska-alt1
 ceph_mount_user: hadoop
 ceph_mount_group: hadoop
