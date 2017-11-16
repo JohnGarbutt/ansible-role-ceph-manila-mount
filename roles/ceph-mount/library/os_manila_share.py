@@ -100,12 +100,12 @@ def main():
         module.fail_json(msg="User does not have access to share.")
     share['access_key'] = access_key
 
-    required_protocal = module.params['protocol']
+    required_protocal = module.params.get('protocol')
     if share['protocol'] != required_protocal:
         module.fail_json(
             msg="Protocol %s does not match requested." % share['protocol'])
 
-    required_size = module.params['size']
+    required_size = module.params.get('size')
     if share['size'] != required_size:
         # TODO if size doesn't match, we could expand the share
         module.fail_json(
