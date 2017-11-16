@@ -10,7 +10,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.0'}
 
 def get_users(identity_client, project_name):
     # TODO - filter by project
-    proj_response = identity_client.get("/v3/projects?name=%s" % project_name)
+    proj_response = identity_client.get(
+            "/v3/projects?name=%s" % project_name).json()
     raw_projects = proj_response["projects"]
     if len(raw_projects != 1):
         raise Exception("Invalid project_name")
@@ -19,7 +20,7 @@ def get_users(identity_client, project_name):
     assign_response = identity_client.get(
         "/v3/role_assignments?include_names=1"
         "&scope.project.id=%s" % project_id,
-        microversion="3.6")
+        microversion="3.6").json()
     # TODO - check paging
     raw_assignments = assign_response["role_assignments"]
     users = [(a['user']['id'], a['user']['name']) for a in raw_assignments]
