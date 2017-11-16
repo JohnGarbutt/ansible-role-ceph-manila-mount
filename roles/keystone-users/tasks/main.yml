@@ -32,7 +32,7 @@
     home: "{{ keystone_user_homedir }}/{{ item.user }}"
     generate_ssh_key: no
     ssh_key_comment: "{{ item.name }}"
-    groups: "{{ keystone_user_groups }}"
+    groups: "{{ keystone_user_groups }},{{ item.groups }}"
   with_items: "{{ keystone_users_allowed }}"
 
 # TODO - need for spark, not very general
