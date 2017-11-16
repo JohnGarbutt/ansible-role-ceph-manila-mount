@@ -38,7 +38,13 @@
     owner: root
     group: root
 
-- name: Configure ceph.conf
+- name: Take config from manila
+  set_fact:
+    ceph_mount_ceph_mon_hostlist: "{{ ceph_mount_manila_share.details.host }}"
+    ceph_mount_ceph_access_key: "{{ ceph_mount_manila_share.details.access_key }}"
+    ceph_mount_ceph_mountpoint: "{{ ceph_mount_manila_share.details.path }}"
+
+- name: Configure ceph.conf using ceph_mount_ceph_mon_hostlist
   template:
     src: ceph.conf
     dest: "{{ ceph_mount_conf_path }}/ceph.conf"
@@ -46,7 +52,7 @@
     group: root
     mode: 0600
 
-- name: Add user keyring
+- name: Add user keyring with ceph_mount_ceph_access_key
   template:
     src: keyring.j2
     dest: "{{ ceph_mount_conf_path }}/{{ ceph_mount_ceph_access_user }}.keyring"

@@ -47,6 +47,16 @@ def main():
     if exports:
         share['export'] = exports[0]
 
+    # Looking for either host:port:path or host:path in export
+    split_export = share['export'].split(":")
+    split_len = len(split_export)
+    if split_len == 2 or split_len == 3:
+        share['path']= split_export[-1]
+    if split_len == 2:
+        share['host'] = split_export[0]
+    if split_len == 3:
+        share['host'] = "%:%" % (split_export[0], split_export[1])
+
     headers={"X-Openstack-Manila-Api-Version": "2.40"}
     payload = {"access_list": None}
     raw_access = share_client.post(
