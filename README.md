@@ -22,7 +22,7 @@ To access the vault protected passwords in the groupvars, we need to give
 ansible access to the vault password, such as telling it where your password
 file lives:
 
-    ANSIBLE_VAULT_PASSWORD_FILE=.vaultpass
+    export ANSIBLE_VAULT_PASSWORD_FILE=.vaultpass
 
 To access OpenStack APIs for getting ssh keys we need admin credentials:
 
