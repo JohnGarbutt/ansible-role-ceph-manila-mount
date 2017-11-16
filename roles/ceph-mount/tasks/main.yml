@@ -1,4 +1,33 @@
 ---
+- name: Create OpenStack config dir
+  file:
+    dest: /etc/openstack
+    owner: root
+    group: root
+    state: directory
+
+- name: Write OpenStack cloud config
+  template:
+    src: clouds.yaml.j2
+    dest: /etc/openstack/clouds.yaml
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Get manila access info
+  os_manila_share:
+    name: jmfg2-spark-test
+    user: spark
+    type: cephfsnativetype
+    protocol: CephFS
+    size_gb: 500
+  register: ceph_mount_manila_share
+  environment:
+      OS_CLOUD: "{{ keystone_user_config_name }}"
+
+- debug:
+    msg: "Got share info: {{ ceph_mount_manila_share.details }}"
+
 - name: Install Ceph Jewl noarch Repo
   yum_repository:
     name: ceph-jewl-noarch
