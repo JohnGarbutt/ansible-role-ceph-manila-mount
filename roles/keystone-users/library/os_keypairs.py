@@ -62,7 +62,7 @@ def main():
             authorized_keys[user['name']] = "\n".join(keypairs)
 
     if authorized_keys:
-        module.exit_json(changed=True, authorized_keys=authorized_keys)
+        module.exit_json(changed=False, authorized_keys=authorized_keys)
 
 if __name__ == '__main__':
     main()
