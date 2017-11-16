@@ -17,7 +17,7 @@ and includes roles for:
 * Configures spark to use a Python34 virtualenv, restarts Spark, adds some
   ssh keys to hadoop and centos users (role: `hibd-spark`)
 * Installs, configures and runs spark-bench and HiBD's spark microbenchmarks
-  (role: `hibd-bench`)
+  (role: `hibd-bench` and role: `spark-bench`)
 
 If you need to install ansible, you could do this:
 
@@ -40,13 +40,17 @@ Or if you have a clouds.yaml file configured:
 
     export OS_CLOUD=alaska
 
-To run all the playbooks, you can do:
+To run all the playbooks (except benchmarks), you can do:
 
 	ansible-playbook master.yml
 
-If you just want to run the benchmarks you can do this:
+If you want to run the benchmarks you can do this:
 
-    ansible-playbook playbooks/groups/bench.yml
+    ansible-playbook playbooks/bench.yml
+
+Currently there are the following cluster inventories:
+
+* (default) `alt-1-spark` RDMA enabled Spark running on alaksa alt-1
 
 Please let us know how it goes. Pull requests are very welcome.
 
