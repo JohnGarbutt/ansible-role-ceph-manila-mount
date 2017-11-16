@@ -3,13 +3,20 @@
 This repository is being used to automate the customization of a spark cluster
 including:
 
-* Reconfigure spark to better make use of the current node size
-* Mounting CephFS and GlusterFS (usually provided by manila)
-* Adding access (currently via ssh-keys in centos user)
-* Adding Prometheus, Grafana, cAduditor for monitoring
-* Running OHB and spark-bench benchmarks
-* Allows certain users to log into via Nova keypair or Keystone password
-* Allows certain users passwordless sudo access (via the wheel group)
+* Adds OpenStack clouds.yaml file (role: openstack-conf)
+* Adds specific keystone users, password from keystone-pam, ssh keys from Nova
+  (role: `keystone-users`)
+* Add CephFS mount (using fuse), pulls config from Manila
+  (role: `ceph-mount`)
+* Adds Monasca agent (role: `monasca_agent`)
+* Installs Docker-ce (role: `docker`)
+* Adds cAdvisor and Prometheus Node exporter (role: `prometheus-docker-node`)
+* Adds cAdvisor and Prometheus Node exporter (role: `prometheus-docker-node`)
+* Configures Prometheus and Grafana (role: `prometheus-server`)
+* Configures spark to use a Python34 virtualenv, restarts Spark, adds some
+  ssh keys to hadoop and centos users (role: `hibd-spark`)
+* Installs, configures and runs spark-bench and HiBD's spark microbenchmarks
+  (role: `hibd-bench`)
 
 If you need to install ansible, you could do this:
 
