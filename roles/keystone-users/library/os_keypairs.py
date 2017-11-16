@@ -8,7 +8,8 @@ import os_client_config
 ANSIBLE_METADATA = {'metadata_version': '1.0'}
 
 
-def get_users(identity_client):
+def get_users(identity_client, project):
+    # TODO - filter by project
     response = identity_client.get("/v3/users").json()
     raw_users = response['users']
     return [{'name':u['name'], 'user_id':u['id']} for u in raw_users]
@@ -18,13 +19,13 @@ def get_keypairs(compute_client, user_id):
     response = compute_client.get(
         "/os-keypairs?user_id=%s" % user_id, microversion="2.15").json()
     raw_keypairs = response['keypairs']
-    return [k['public_key'] for k in raw_keypairs if 'public_key' in raw_keypairs]
+    return [k['keypair']['public_key'] for k in raw_keypairs]
 
 
 def main():
     module = AnsibleModule(
         argument_spec = dict(
-            all=dict(required=True, type='bool'),
+            project=dict(required=True, type='str'),
         ),
         supports_check_mode=False
     )
@@ -39,12 +40,13 @@ def main():
     if not identity_client or not compute_client:
         module.fail_json(msg="Please check your OpenStack credentials.")
 
-    users = get_users(identity_client)
+    users = get_users(identity_client, module.params['project'])
     for user in users:
         user['keypairs'] = get_keypairs(compute_client, user['user_id'])
 
+    users_with_keys = [u for u in users if u['keypairs']]
     if users:
-        module.exit_json(changed=True, users=users)
+        module.exit_json(changed=True, users=users_with_keys)
 
 if __name__ == '__main__':
     main()

@@ -5,7 +5,7 @@
 
 - name: Get ssh keys
   os_keypairs:
-    all: True
+    project: "{{ keystone_user_os_project_name }}"
   register: sshkeys
   environment:
       OS_CLOUD: "{{ keystone_user_config_name }}"
