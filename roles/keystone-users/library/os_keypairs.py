@@ -8,11 +8,23 @@ import os_client_config
 ANSIBLE_METADATA = {'metadata_version': '1.0'}
 
 
-def get_users(identity_client, project):
+def get_users(identity_client, project_name):
     # TODO - filter by project
-    response = identity_client.get("/v3/users").json()
-    raw_users = response['users']
-    return [{'name':u['name'], 'user_id':u['id']} for u in raw_users]
+    proj_response = identity_client.get("/v3/projects?name=%s" % project_name)
+    raw_projects = proj_response["projects"]
+    if len(raw_projects != 1):
+        raise Exception("Invalid project_name")
+    project_id = raw_projects[0]["id"]
+
+    assign_response = identity_client.get(
+        "/v3/role_assignments?include_names=1"
+        "&scope.project.id=%s" % project_id,
+        microversion="3.6")
+    # TODO - check paging
+    raw_assignments = assign_response["role_assignments"]
+    users = [(a['user']['id'], a['user']['name']) for a in raw_assignments]
+    users = set(user_ids)
+    return [{'name':u[1], 'user_id':u[0]} for u in users]
 
 
 def get_keypairs(compute_client, user_id):
@@ -25,7 +37,7 @@ def get_keypairs(compute_client, user_id):
 def main():
     module = AnsibleModule(
         argument_spec = dict(
-            project=dict(required=True, type='str'),
+            project_name=dict(required=True, type='str'),
         ),
         supports_check_mode=False
     )
@@ -40,7 +52,7 @@ def main():
     if not identity_client or not compute_client:
         module.fail_json(msg="Please check your OpenStack credentials.")
 
-    users = get_users(identity_client, module.params['project'])
+    users = get_users(identity_client, module.params['project_name'])
     for user in users:
         user['keypairs'] = get_keypairs(compute_client, user['user_id'])
 
