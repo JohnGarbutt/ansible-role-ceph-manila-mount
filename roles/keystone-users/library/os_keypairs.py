@@ -13,7 +13,7 @@ def get_users(identity_client, project_name):
     proj_response = identity_client.get(
             "/v3/projects?name=%s" % project_name).json()
     raw_projects = proj_response["projects"]
-    if len(raw_projects != 1):
+    if len(raw_projects) != 1:
         raise Exception("Invalid project_name")
     project_id = raw_projects[0]["id"]
 
