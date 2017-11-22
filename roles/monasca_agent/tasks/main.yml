@@ -3,17 +3,6 @@
 #
 ---
 
-- name: Check if Monasca agent service exists
-  stat: path=/etc/systemd/system/monasca-agent.service
-  register: service_status
-
-- name: Stop monasca-agent if it's already installed
-  service:
-    name: monasca-agent
-    state: stopped
-  when: service_status.stat.exists
-
-# Covers both yum and zypper, the packages names are the same in that case
 - name: install packages
   package:
     name: '{{ item }}'
@@ -27,14 +16,19 @@
     - 'libxml2-devel'
     - 'libxslt-devel'
 
-- name: create virtualenv
+- name: Reliably create virtualenv
   shell: 'virtualenv {{ monasca_agent_venv }}'
+  args:
+    creates: "{{ monasca_agent_venv }}"
 
-- name: upgrade pip
-  shell: '{{ monasca_agent_venv }}/bin/pip install --upgrade pip'
-
-- name: upgrade setuptools
-  shell: '{{ monasca_agent_venv }}/bin/pip install --upgrade setuptools'
+- name: Upgrade pip and setuptools in virtualenv
+  pip:
+    name: "{{ item }}"
+    state: latest
+    virtualenv: "{{ monasca_agent_venv }}"
+  with_items:
+    - pip
+    - setuptools
 
 - name: install monasca-agent into virtualenv
   pip:
@@ -97,7 +91,7 @@
     group: root
     mode: "u=rw,g=r"
   with_dict: '{{ monasca_agent_plugins_enable }}'
-  when: '{{ item.value|bool }}'
+  when: item.value|bool
   notify: restart agent
 
 # Additional python deps for docker monitoring
@@ -107,7 +101,7 @@
     name: docker-py
     virtualenv: '{{ monasca_agent_venv }}'
     virtualenv_site_packages: no
-  when: '{{ monasca_agent_enable_docker|default(False)|bool }}'
+  when: monasca_agent_enable_docker|default(False)|bool
   
 - name: manual configuration file for docker plugin
   template:
@@ -116,7 +110,7 @@
     owner: root
     group: root
     mode: "u=rw,g=r"
-  when: '{{ monasca_agent_enable_docker|default(False)|bool }}'
+  when: monasca_agent_enable_docker|default(False)|bool
   notify: restart agent
   
 - name: ensure monasca-agent started and enabled
