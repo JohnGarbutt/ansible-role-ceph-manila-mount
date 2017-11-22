@@ -1,0 +1,5 @@
+---
+time_lon_ntp_servers:
+  - ntp0.csx.cam.ac.uk
+  - ntp1.csx.cam.ac.uk
+  - ntp2.csx.cam.ac.uk
