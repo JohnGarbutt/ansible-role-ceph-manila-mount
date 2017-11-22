@@ -10,3 +10,7 @@ master
 [alt-1-spark:children]
 master
 slave
+
+[hibd-spark:children]
+master
+slave
