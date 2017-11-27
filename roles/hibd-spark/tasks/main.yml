@@ -56,3 +56,9 @@
   shell: 'su {{ hibd_spark_user }} -c "{{ hibd_spark_py3_venv }}/bin/pip install --upgrade setuptools"'
   args:
     creates: "{{ hibd_spark_py3_venv }}"
+
+# vlad's testing
+
+- name: Install scala and sbt
+  package:
+    name: scala,sbt
