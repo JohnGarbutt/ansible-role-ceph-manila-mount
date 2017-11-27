@@ -62,7 +62,7 @@
 - name: All users should see SPARK_HOME
   file:
     src: /opt/spark/conf/spark-env.sh
-    dest: /etc/profile.d/spark.sh
+    path: /etc/profile.d/spark.sh
     owner: root
     group: root
     state: link
