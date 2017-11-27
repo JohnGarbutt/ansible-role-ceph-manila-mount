@@ -61,4 +61,4 @@
 
 - name: Install scala and sbt
   package:
-    name: scala,sbt
+    name: sbt
