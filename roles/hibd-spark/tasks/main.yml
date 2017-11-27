@@ -62,7 +62,7 @@
 - name: All users should see SPARK_HOME
   file:
     src: /opt/spark/conf/spark-env.sh
-    path: /etc/profile.d/spark.sh
+    dest: /etc/profile.d/spark.sh
     owner: root
     group: root
     state: link
@@ -71,8 +71,10 @@
 #
 - name: Install bintray yum repository (ansible < 2.1)
   get_url:
-  url:  https://bintray.com/sbt/rpm/rpm
-  dest: /etc/yum.repos.d/bintray-sbt.repo
+    url:  https://bintray.com/sbt/rpm/rpm
+    dest: /etc/yum.repos.d/bintray-sbt.repo
 
 - name: Ensure sbt is installed (yum)
-  yum: state=present name=sbt
+  yum:
+    state=present
+    name=sbt
