@@ -1,3 +1,4 @@
+---
 - name: Stop all spark processes
   command: "su hadoop {{ hibd_spark_home }}/sbin/stop-all.sh"
   ignore_errors: true
@@ -6,3 +7,15 @@
 - name: Start all spark processes
   command: "su hadoop {{ hibd_spark_home }}/sbin/start-all.sh"
   when: "'master' in group_names"
+
+- name: Start HDFS and yarn
+  shell: |
+    sudo su - -c "hadoop-daemon.sh start datanode" hadoop
+    sudo su - -c "yarn-daemon.sh start nodemanager" hadoop
+  when: "'hdfs' in group_names"
+
+- name: Start HDFS and yarn master
+  shell: |
+    sudo su - -c "hadoop-daemon.sh start namenode" hadoop
+    sudo su - -c "yarn-daemon.sh start resourcemanager" hadoop
+  when: "'master' in group_names and 'hdfs' in group_names"
