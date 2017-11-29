@@ -76,5 +76,5 @@
 
 - name: Ensure sbt is installed (yum)
   yum:
-    state=present
-    name=sbt
+    state: present
+    name: sbt
