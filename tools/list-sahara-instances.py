@@ -21,7 +21,7 @@ def get_id(client, cluster_name):
     raise Exception("Can't find %s" % cluster_name)
 
 
-def get_cluster(client, client_id):
+def get_cluster(client, cluster_id):
     url = "/clusters/%s" % cluster_id
     return client.get(url).json()['cluster']
 
