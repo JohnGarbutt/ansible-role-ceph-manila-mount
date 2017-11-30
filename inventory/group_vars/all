@@ -25,7 +25,7 @@ allowed_users:
   - name: "Stig Telfer"
     user: stig
     uid: 2006
-    groups: wheel
+    groups: hadoop,wheel
   - name: "Ben Mort"
     user: ben
     uid: 2007
