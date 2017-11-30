@@ -12,7 +12,7 @@ def get_sahara_client():
 
 def get_id(client, cluster_name):
     url = "/clusters"
-    raw_clusters = client.get(url)['clusters'].json()
+    raw_clusters = client.get(url).json()['clusters']
 
     matches = [cluster['id'] for cluster in raw_clusters
                              if cluster['name'] == cluster_name]
