@@ -40,8 +40,11 @@ def main():
     raw_node_groups = raw_cluster['node_groups']
     groups = {group['name']: group['instances'] for group in raw_node_groups}
 
+    inventory = {name: [i['management_ip'] for i in instances]
+                 for name, instances in groups.items()}
+
     import pprint
-    pprint.pprint(groups)
+    pprint.pprint(inventory)
 
 
 if __name__ == '__main__':
