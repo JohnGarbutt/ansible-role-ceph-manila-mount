@@ -23,6 +23,10 @@
   yum: name=epel-release,ceph-common,ceph-fuse,fuse
   when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'"
 
+- name: Ensure deps for os_manila_share
+  pip:
+    name: os_client_config
+
 - name: Get manila access info
   os_manila_share:
     name: "{{ ceph_mount_manila_share_name }}"
