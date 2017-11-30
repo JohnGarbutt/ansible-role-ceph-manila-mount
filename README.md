@@ -26,6 +26,9 @@ If you need to install ansible, you could do this:
 	pip install -U pip
 	pip install ansible
 
+    ansible-galaxy install stackhpc.os-config stackhpc.os-keypair-login \
+                           stackhpc.os-keystone-pam
+
 To access the vault protected passwords in the groupvars, we need to give
 ansible access to the vault password, such as telling it where your password
 file lives:
@@ -42,7 +45,7 @@ Or if you have a clouds.yaml file configured:
 
 To run all the playbooks (except benchmarks), you can do:
 
-	ansible-playbook master.yml
+    ansible-playbook master.yml
 
 If you want to run the benchmarks you can do this:
 
