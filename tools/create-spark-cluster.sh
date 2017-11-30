@@ -6,7 +6,7 @@ CLUSTER_NAME=${CLUSTER_NAME:-spark-rdma}
 
 CLUSTER_TEMPLATE_NAME=${CLUSTER_TEMPLATE_NAME:-rdma-spark-2-1-0}
 IMAGE_NAME=${IMAGE_NAME:-sahara-vanilla-2.8.0-centos7}
-KEYPAIR_NAME=${KEYPAIR_NAME:-alaska-gate}
+KEYPAIR_NAME=${KEYPAIR_NAME:-stack}
 NETWORK_NAME=${NETWORK_NAME:-ilab}
 
 # Create a cluster.
