@@ -11,14 +11,19 @@ def get_sahara_client():
 
 
 def get_id(client, cluster_name):
-    url = "/clusters/"
-    raw_clusters = client.get(url)['clusters']
+    url = "/clusters"
+    raw_clusters = client.get(url)['clusters'].json()
 
     matches = [cluster['id'] for cluster in raw_clusters
                              if cluster['name'] == cluster_name]
     if len(matches) == 1:
         return matches[0]
     raise Exception("Can't find %s" % cluster_name)
+
+
+def get_cluster(client, client_id)
+    url = "/clusters/%s" % cluster_id
+    return client.get(url).json()['cluster']
 
 
 def main():
@@ -30,10 +35,13 @@ def main():
     client = get_sahara_client()
 
     cluster_id = get_id(client, args.cluster_name)
+    raw_cluster = get_cluster(client, cluster_id)
 
-    url = "/clusters/%s" % cluster_id
+    raw_node_groups = raw_cluster['node_groups']
+    groups = {group['name']: group['instances'] for group in raw_node_groups}
+
     import pprint
-    pprint.pprint(client.get(url))
+    pprint.pprint(groups)
 
 
 if __name__ == '__main__':
