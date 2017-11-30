@@ -48,6 +48,7 @@ def main():
         text.append("[%s]" % name)
         for ip in ips:
             text.append(ip)
+        text.append("")
 
     group_name = args.cluster_name
     text.append("[%s:children]" % group_name)
