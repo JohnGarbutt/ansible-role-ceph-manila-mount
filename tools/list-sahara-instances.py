@@ -43,8 +43,17 @@ def main():
     inventory = {name: [i['management_ip'] for i in instances]
                  for name, instances in groups.items()}
 
+    text = []
+    for name, ips in inventory.items():
+        text.append("[%s]" % name)
+        for ip in ips:
+            text.append(ip)
+
+    with open(args.cluster_name, 'w') as f:
+        f.writeline(text)
+
     import pprint
-    pprint.pprint(inventory)
+    pprint.pprint(text)
 
 
 if __name__ == '__main__':
