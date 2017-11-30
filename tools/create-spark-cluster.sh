@@ -1,8 +1,6 @@
 #!/bin/bash
 
-set -eux
-
-pip install python-saharaclient
+pip install python-saharaclient >/dev/null
 
 CLUSTER_NAME=${CLUSTER_NAME:-spark-rdma}
 

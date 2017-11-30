@@ -40,20 +40,25 @@ def main():
     raw_node_groups = raw_cluster['node_groups']
     groups = {group['name']: group['instances'] for group in raw_node_groups}
 
-    inventory = {name: [i['management_ip'] for i in instances]
+    inventory = {name.split('-')[-1]: [i['management_ip'] for i in instances]
                  for name, instances in groups.items()}
 
     text = []
     for name, ips in inventory.items():
-        name = name.split('-')[-1]
         text.append("[%s]" % name)
         for ip in ips:
             text.append(ip)
 
+    group_name = args.cluster_name
+    text.append("[%s:children]" % group_name)
+    for name in inventory.keys():
+        text.append(name)
+
     inventory_file = "\n".join(text)
     print inventory_file
 
-    with open(args.cluster_name, 'w') as f:
+    filename = "inventory/%s" % group_name
+    with open(filename, 'w') as f:
         f.write(inventory_file)
 
 
