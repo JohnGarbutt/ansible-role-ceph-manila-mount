@@ -45,15 +45,16 @@ def main():
 
     text = []
     for name, ips in inventory.items():
+        name = name.split('-')[-1]
         text.append("[%s]" % name)
         for ip in ips:
             text.append(ip)
 
-    with open(args.cluster_name, 'w') as f:
-        f.writeline(text)
+    inventory_file = "\n".join(text)
+    print inventory_file
 
-    import pprint
-    pprint.pprint(text)
+    with open(args.cluster_name, 'w') as f:
+        f.write(inventory_file)
 
 
 if __name__ == '__main__':
