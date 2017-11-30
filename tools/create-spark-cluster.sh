@@ -23,4 +23,4 @@ fi
 
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 
-$SCRIPTPATH/list-sahara-instances.py $CLUSER_NAME
+$SCRIPTPATH/list-sahara-instances.py $CLUSTER_NAME
