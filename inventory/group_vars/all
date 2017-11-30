@@ -21,7 +21,7 @@ allowed_users:
   - name: "John Taylor"
     user: john
     uid: 2005
-    groups: hadoop wheel
+    groups: hadoop,wheel
   - name: "Stig Telfer"
     user: stig
     uid: 2006
@@ -33,7 +33,7 @@ allowed_users:
   - name: "Fred Dulwich"
     user: fred
     uid: 2009
-    groups: hadoop wheel
+    groups: hadoop,wheel
   - name: "Tim Cornwell"
     user: tim
     uid: 2014
