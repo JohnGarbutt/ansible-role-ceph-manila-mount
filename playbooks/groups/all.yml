@@ -3,6 +3,7 @@
   become: yes
 
   roles:
+    - time-lon
     - { role: stackhpc.os-config,
         os_config_content: "{{ openstack_conf_content }}" }
     - { role: stackhpc.os-keypair-login,
@@ -11,8 +12,11 @@
         os_keypair_login_users: "{{ allowed_users }}" }
     - { role: stackhpc.os-keystone-pam,
         os_keystone_pam_os_config_name: "{{ keystone_user_os_config_name_pam }}" }
-    - time-lon
-    - ceph-mount
+    - { role: stackhpc.os-manila-mount,
+        os_manila_mount_os_config_name: "{{ ceph_mount_os_config_name }}",
+        os_manila_mount_share_name: "{{ ceph_mount_manila_share_name }}",
+        os_manila_mount_share_user: "{{ ceph_mount_ceph_access_user }}",
+        os_manila_mount_user: "{{ ceph_mount_user }}"}
     # TODO - glusterfs-mount
     - monasca_agent
     - docker
