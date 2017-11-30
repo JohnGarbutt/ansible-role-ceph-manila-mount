@@ -54,6 +54,16 @@ def main():
     text.append("[%s:children]" % group_name)
     for name in inventory.keys():
         text.append(name)
+    text.append("")
+
+    # TODO - total hack...
+    text.append("[%s:children]" % "hibd-spark")
+    for name in inventory.keys():
+        text.append(name)
+    text.append("")
+
+    text.append("[prometheus-server:children]")
+    text.append("master")
 
     inventory_file = "\n".join(text)
     print inventory_file
