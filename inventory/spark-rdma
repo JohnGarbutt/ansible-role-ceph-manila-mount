@@ -1,0 +1,16 @@
+[master]
+10.60.253.33
+
+[slave]
+10.60.253.31
+
+[spark-rdma:children]
+master
+slave
+
+[hibd-spark:children]
+master
+slave
+
+[prometheus-server:children]
+master
