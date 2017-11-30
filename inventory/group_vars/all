@@ -1,2 +1,52 @@
 ---
 ansible_user: centos
+
+allowed_users:
+  - name: "Chris Broekema"
+    user: chris
+    uid: 2001
+    groups: hadoop
+  - name: "Paul Browne"
+    user: paul
+    uid: 2002
+    groups: hadoop
+  - name: "Mark Goddard"
+    user: mark
+    uid: 2003
+    groups: hadoop,wheel
+  - name: "Vlad Stolyarov"
+    user: vlad
+    uid: 2004
+    groups: hadoop
+  - name: "John Taylor"
+    user: john
+    uid: 2005
+    groups: hadoop wheel
+  - name: "Stig Telfer"
+    user: stig
+    uid: 2006
+    groups: wheel
+  - name: "Ben Mort"
+    user: ben
+    uid: 2007
+    groups: hadoop
+  - name: "Fred Dulwich"
+    user: fred
+    uid: 2009
+    groups: hadoop wheel
+  - name: "Tim Cornwell"
+    user: tim
+    uid: 2014
+    groups: hadoop
+  - name: "Piers Harding"
+    user: piers
+    uid: 2015
+    groups: hadoop
+  - name: "Doug Szumski"
+    user: doug
+    uid: 2019
+    groups: hadoop,wheel
+  - name: "John Garbutt"
+    user: johng
+    uid: 2020
+    groups: hadoop,wheel

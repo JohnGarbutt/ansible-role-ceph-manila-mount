@@ -3,11 +3,17 @@
   become: yes
 
   roles:
+    - { role: stackhpc.os-config,
+        os_config_content: "{{ openstack_conf_content }}" }
+    - { role: stackhpc.os-keypair-login,
+        os_keypair_login_cloud: "{{ keystone_user_os_config_name }}",
+        os_keypair_login_project_name: "{{ keystone_user_os_project_name }}",
+        os_keypair_login_users: "{{ allowed_users }}" }
+    - { role: stackhpc.os-keystone-pam,
+        os_keystone_pam_os_config_name: "{{ keystone_user_os_config_name_pam }}" }
     - time-lon
-    - openstack-conf
     - ceph-mount
     # TODO - glusterfs-mount
-    - keystone-users
     - monasca_agent
     - docker
     - prometheus-docker-node
