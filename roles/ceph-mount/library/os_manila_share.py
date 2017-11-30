@@ -27,7 +27,7 @@ def get_share_details(share_client, share_name):
         headers=headers).json()['shares']
     if not raw_shares:
         # TODO - we could create the share, if given enough info
-        raise Exception("Unable to find requested share.")
+        raise Exception("Unable to find requested share: %s" % share_name)
 
     raw_share = raw_shares[0]
 
