@@ -14,14 +14,13 @@
 
 - name: Ensure mount directory exists
   file:
-    path: /root/mnt
+    path: "{{ glusterfs_mount_path }}"
     state: directory
     mode: 0755
 
 - name: Mount Glusterfs
   mount:
-    path: /root/mnt
+    path: "{{ glusterfs_mount_path }}"
     src: "{{ glusterfs_host }}:{{ glusterfs_path }}"
     fstype: glusterfs
     state: mounted
-
