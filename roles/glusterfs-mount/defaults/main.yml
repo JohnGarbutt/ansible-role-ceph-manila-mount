@@ -1,7 +1,7 @@
 ---
 
-glusterfs_host: 10.60.253.38
-glusterfs_path: /simple-striped
+glusterfs_host: 10.60.253.47
+glusterfs_path: nvme-raid10
 
 gluster_bricks: [
     '10.60.253.38 orange-data-0.novalocal orange-data-0',

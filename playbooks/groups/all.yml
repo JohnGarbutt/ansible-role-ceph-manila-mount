@@ -3,6 +3,7 @@
   become: yes
 
   roles:
+    - glusterfs-mount
     - time-lon
     - { role: stackhpc.os-config,
         os_config_content: "{{ openstack_conf_content }}" }
@@ -17,7 +18,6 @@
         os_manila_mount_share_name: "{{ ceph_mount_manila_share_name }}",
         os_manila_mount_share_user: "{{ ceph_mount_ceph_access_user }}",
         os_manila_mount_user: "{{ ceph_mount_user }}"}
-    # TODO - glusterfs-mount
     - monasca_agent
     - docker
     - prometheus-docker-node
