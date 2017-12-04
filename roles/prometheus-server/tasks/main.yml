@@ -40,7 +40,7 @@
       - 9109:9109
       - 9109:9109/udp
     volumes:
-      - "{{ prometheus_home }}/graphite_mapping:/tmp/graphite_mapping.conf"
+      - "{{ prometheus_home }}/graphite_mapping.conf:/tmp/graphite_mapping.conf"
     command: "--graphite.mapping-config=/tmp/graphite_mapping.conf"
 
 - name: Create Grafana dir
