@@ -30,6 +30,7 @@
   template:
     src: graphite_mapping.conf
     dest: "{{ prometheus_home }}/graphite_mapping.conf"
+# http://rokroskar.github.io/monitoring-spark-on-hadoop-with-prometheus-and-grafana.html
 
 - name: Add graphite exporter (jmx metrics get sent here)
   docker_container:
