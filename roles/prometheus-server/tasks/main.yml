@@ -26,6 +26,23 @@
       - "{{ prometheus_home }}/alerts.rules:/etc/prometheus/alerts.rules"
       - "{{ prometheus_home }}/data:/prometheus prom/prometheus"
 
+- name: Configure graphite mapping
+  template:
+    src: graphite_mapping.conf
+    dest: "{{ prometheus_home }}/graphite_mapping.conf"
+
+- name: Add graphite exporter (jmx metrics get sent here)
+  docker_container:
+    name: graphite
+    image: prom/graphite-exporter
+    ports:
+      - 9108:9108
+      - 9109:9109
+      - 9109:9109/udp
+    volumes:
+      - "{{ prometheus_home }}/graphite_mapping:/tmp/graphite_mapping.conf"
+    command: "--graphite.mapping-config=/tmp/graphite_mapping.conf"
+
 - name: Create Grafana dir
   file:
     path: "/var/lib/grafana"
