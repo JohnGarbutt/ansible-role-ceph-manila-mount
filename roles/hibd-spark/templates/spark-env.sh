@@ -2,6 +2,10 @@ export SPARK_CONF_DIR=/opt/spark/conf
 export SPARK_MASTER_HOST={{ groups['master'][0] }}
 export SPARK_LOCAL_IP=`hostname -s`
 
+#export HADOOP_CONF_DIR=/opt/hadoop/etc/hadoop
+#export HADOOP_HOME=/opt/hadoop
+#export YARN_CONF_DIR=/opt/hadoop/etc/hadoop
+
 export SPARK_WORKER_MEMORY=120g
 export SPARK_WORKER_CORES=128
 export SPARK_DAEMON_MEMORY=120g
