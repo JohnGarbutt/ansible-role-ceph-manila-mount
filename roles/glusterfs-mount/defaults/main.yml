@@ -1,6 +1,6 @@
 ---
 
-glusterfs_mount_path: /home/openstack/john/mnt
+glusterfs_mount_path: /home/hadoop/glusterfs
 
 glusterfs_host: 10.60.253.47
 glusterfs_path: nvme-raid10

@@ -19,6 +19,14 @@ scrape_configs:
         - '{{ node }}:9090'
 {% endfor %}
 
+  - job_name: 'graphite'
+
+    static_configs:
+      - targets:
+{% for node in groups['master'] %}
+        - '{{ node }}:9108'
+{% endfor %}
+
   - job_name: 'node'
     scrape_interval: 15s
     static_configs:

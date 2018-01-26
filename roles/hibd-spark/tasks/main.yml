@@ -38,6 +38,14 @@
   notify:
     - Restart Spark
 
+# Depends on prometheus graphite exporter running on master node
+- name: Add spark metrics config
+  template:
+    src: metrics.properties
+    dest: "{{ hibd_spark_home }}/conf/metrics.properties"
+  notify:
+    - Restart Spark
+
 - name: Install python3
   package:
     name: python34-pip,python34-virtualenv
