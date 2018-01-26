@@ -95,18 +95,3 @@ After the above, update the ``hosts`` file to list the hostnames (or IPs)
 for all the servers you wish mount the ceph filesystem on. In the future
 we hope to provide tools to generate that information from a magnum
 cluster or similar.
-
-If you need to install ansible, you could do this:
-
-	virtualenv .venv
-	. .venv/bin/activate
-	pip install -U pip
-	pip install ansible
-
-You can run the playbook like this to mount the filesystem:
-
-	ansible-playbook -i hosts site.yml --skip-tags unmount
-
-You can run the playbook like this to unmount the filesystem:
-
-	ansible-playbook -i hosts site.yml --skip-tags mount
