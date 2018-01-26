@@ -1,10 +1,10 @@
-- hosts: bench
+- hosts: master
   become: no
 
   roles:
     - hibd-bench
 
-- hosts: bench
+- hosts: master
   become: yes
 
   roles:
