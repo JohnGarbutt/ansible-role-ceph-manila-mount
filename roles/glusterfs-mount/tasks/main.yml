@@ -18,6 +18,13 @@
     state: directory
     mode: 0755
 
+- name: Ensure ib interface is configured (TODO big hack)
+  shell: |
+    ipx=`/sbin/ifconfig eno1 | grep 'inet ' | cut -d: -f2 | awk '{ print $2}' | cut -d. -f4`
+    echo $ipx
+    ibdomain=10.60.100
+    ifconfig ib0 $ibdomain.$ipx/24
+
 - name: Mount Glusterfs
   mount:
     path: "{{ glusterfs_mount_path }}"
