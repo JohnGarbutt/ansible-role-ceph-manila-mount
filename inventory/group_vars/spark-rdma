@@ -32,7 +32,7 @@ keystone_user_os_config_name_pam: alaska-pam
 keystone_user_os_project_name: p3
 
 monasca_app_name: johng-spark-rdma-test
-monasca_agent_project: monasca
+monasca_agent_project: p3
 monasca_agent_user: johng
 monasca_agent_keystone: !vault |
       $ANSIBLE_VAULT;1.1;AES256
