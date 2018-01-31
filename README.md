@@ -9,7 +9,6 @@ and includes roles for:
 * Add CephFS mount (using fuse), pulls connection info from Manila
   (role: `ceph-mount`)
 * TODO: add GlusterFS mount, using connection info from Manila
-* Adds Monasca agent (role: `monasca_agent`)
 * Installs Docker-ce (role: `docker`)
 * Adds cAdvisor and Prometheus Node exporter (role: `prometheus-docker-node`)
 * Adds cAdvisor and Prometheus Node exporter (role: `prometheus-docker-node`)
@@ -27,7 +26,8 @@ If you need to install ansible, you could do this:
 	pip install ansible
 
     ansible-galaxy install stackhpc.os-config stackhpc.os-keypair-login \
-                           stackhpc.os-keystone-pam stackhpc.os-manila-mount
+                           stackhpc.os-keystone-pam stackhpc.os-manila-mount \
+                           stackhpc.monasca-agent
 
 To access the vault protected passwords in the groupvars, we need to give
 ansible access to the vault password, such as telling it where your password

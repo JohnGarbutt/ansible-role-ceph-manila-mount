@@ -18,6 +18,19 @@
         os_manila_mount_share_name: "{{ ceph_mount_manila_share_name }}",
         os_manila_mount_share_user: "{{ ceph_mount_ceph_access_user }}",
         os_manila_mount_user: "{{ ceph_mount_user }}"}
-    - monasca_agent
+    - { role: stackhpc.monasca_agent,
+        keystone_url: "{{ monasca_agent_keystone }}"
+        monasca_user: root
+        monasca_agent_user: "{{ monasca_agent_user }}"
+        monasca_agent_password: "{{ monasca_agent_password }}"
+        monasca_agent_project: "{{ monasca_agent_project }}"
+        monasca_agent_version: 2.2.0
+        monasca_endpoint_type: public
+        monasca_project_domain_name: Default
+        monasca_user_domain_name: Default
+        monasca_region_name: RegionOne
+        monasca_service_type: monitoring
+        monasca_agent_custom_plugin_repos:
+          - "https://github.com/stackhpc/stackhpc-monasca-agent-plugins.git@master"}
     - docker
     - prometheus-docker-node
