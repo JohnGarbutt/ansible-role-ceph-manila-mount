@@ -4,7 +4,6 @@
 [slave]
 10.60.253.35
 10.60.253.31
-10.60.253.53
 
 [spark-rdma:children]
 master
