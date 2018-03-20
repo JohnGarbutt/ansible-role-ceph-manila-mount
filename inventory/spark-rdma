@@ -5,7 +5,7 @@
 10.60.253.25
 10.60.253.20
 
-[rdma-spark-2-1-0-centos7:children]
+[spark-rdma:children]
 master
 slave
 
